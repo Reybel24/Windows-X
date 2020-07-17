@@ -1,14 +1,28 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <Desktop />
   </div>
 </template>
 
+<script>
+import Desktop from '@/views/Desktop.vue'
+
+export default {
+  name: 'app',
+  components: {
+    Desktop
+  }
+}
+</script>
+
 <style lang="scss">
+body {
+  padding: 0;
+  margin: 0;
+}
+div {
+  display: flex;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
