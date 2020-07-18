@@ -19,6 +19,7 @@ export default {
 body {
   padding: 0;
   margin: 0;
+  overflow: hidden;
 }
 div {
   display: flex;
@@ -29,6 +30,7 @@ div {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  ;
 }
 
 #nav {

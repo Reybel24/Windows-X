@@ -32,10 +32,11 @@ export default {
   width: 100%;
   height: 43px;
   margin-top: auto;
-  background-color: rgb(49, 49, 49);
-  opacity: .97;
+  background-color: rgb(37, 37, 37);
+  opacity: .94;
   align-items: center;
   padding: 0 8px 0 0px;
+  // filter: blur(10px);
 
   .windows-logo {
     width: auto;

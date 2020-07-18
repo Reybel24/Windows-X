@@ -1,0 +1,41 @@
+{
+    "rules": {
+        "semi": [
+            "error",
+            "always"
+        ],
+        "vue/html-self-closing": [
+            "off",
+            {
+                "html": {
+                    "void": "never",
+                    "normal": "never",
+                    "component": "always"
+                },
+                "svg": "always",
+                "math": "always"
+            }
+        ],
+        "vue/singleline-html-element-content-newline": [
+            "off",
+            {
+                "ignoreWhenNoAttributes": true,
+                "ignoreWhenEmpty": true
+            }
+        ],
+        "space-before-function-paren": [
+            "error",
+            {
+                "anonymous": "never",
+                "named": "never",
+                "asyncArrow": "always"
+            }
+        ],
+        "max-attributes-per-line": [
+            "off"
+        ],
+        "vue/no-unused-components": ["error", {
+            "ignoreWhenBindingPresent": true
+          }]
+    }
+}

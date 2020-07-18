@@ -19,7 +19,7 @@ export default {
   },
   computed: {
     desktopWallpaper: function () {
-      return `url(${require('@/assets/wallpapers/earth.jpg')})`
+      return `url(${require('@/assets/wallpapers/diamond.jpg')})`
     }
   }
 }
