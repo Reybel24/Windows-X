@@ -101,7 +101,6 @@ export default new Vuex.Store({
     unlockPC({ commit, state }, payload) {
       return new Promise((resolve, reject) => {
         state.locked = false
-        console.log("unlocked")
         resolve(0)
       });
     },
