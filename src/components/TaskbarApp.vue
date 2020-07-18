@@ -6,10 +6,17 @@
 </template>
 
 <script>
+import { EventBus } from '@/util/event-bus.js'
+
 export default {
   name: 'TaskbarApp',
   components: {},
   props: {
+    app: {
+      type: Object,
+      default: () => {},
+      required: false
+    },
     icon: {
       type: String,
       default: 'windows-10-logo',
@@ -28,8 +35,9 @@ export default {
   },
   methods: {
     onClick () {
-      this.isOpen = !this.isOpen
-      if (!this.isOpen) this.isActive = false
+      // this.isOpen = !this.isOpen
+      // if (!this.isOpen) this.isActive = false
+      EventBus.$emit('OPEN_APP', this.app)
     }
   },
   computed: {

@@ -6,12 +6,7 @@
 
     <!-- Apps -->
     <div class="apps-group">
-      <TaskbarApp icon="icon_firefox" isOpen />
-      <TaskbarApp icon="icon_file-explorer" />
-      <TaskbarApp icon="icon_spotify" />
-      <TaskbarApp icon="icon_steam" isOpen />
-      <TaskbarApp icon="icon_word" isOpen isActive />
-      <TaskbarApp icon="icon_outlook" />
+      <TaskbarApp v-for="(app, index) in this.$store.getters.getAppsInTaskbar" :key="index" :app="app" :icon="app.icon" :isOpen="app.isOpen" />
     </div>
   </div>
 </template>
@@ -23,6 +18,12 @@ export default {
   name: 'Taskbar',
   components: {
     TaskbarApp
+  },
+  methods: {
+    clickApp () {
+      console.log('hmmmm')
+      // this.$emit('click-app', app, $event)
+    }
   }
 }
 </script>

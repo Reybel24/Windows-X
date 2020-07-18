@@ -1,9 +1,9 @@
 <template>
   <div class="terminal-border" @mousedown="dragWindow">
     <div class="actions">
-      <i class="fas fa-circle" :class="'icon exit'"></i>
-      <i class="fas fa-circle" :class="'icon minimize'"></i>
-      <i class="fas fa-circle" :class="'icon maximize'"></i>
+      <div @click="$emit('click-close')"><i class="fas fa-circle" :class="'icon exit'"></i></div>
+      <div @click="$emit('click-minimize')"><i class="fas fa-circle" :class="'icon minimize'"></i></div>
+      <div @click="$emit('click-maximize')"><i class="fas fa-circle" :class="'icon maximize'"></i></div>
     </div>
 
     <div class="title text-terminal text-black">
@@ -52,6 +52,7 @@ export default {
   background-color: #f1f1f1;
   align-items: center;
   justify-content: space-between;
+  cursor: default;
 
   .actions {
     padding-left: 10px;
@@ -65,6 +66,7 @@ export default {
     color: #585858;
     font-size: 16px;
     padding: 0px 7px 0px 0px;
+    cursor: pointer;
 
     &.exit {
       color: #ee5e58;

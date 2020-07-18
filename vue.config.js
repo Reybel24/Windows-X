@@ -2,7 +2,7 @@ module.exports = {
   css: {
     loaderOptions: {
       sass: {
-        prependData: '@import "@/scss/main.scss";'
+        prependData: '@import "@/style/main.scss";'
       }
     }
   }

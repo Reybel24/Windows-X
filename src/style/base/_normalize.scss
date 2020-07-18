@@ -1,0 +1,24 @@
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#app {
+    font-family: 'Open Sans', sans-serif;
+    background-color: $bgcolor;
+    flex-direction: column;
+    background-color: $bgcolor;
+}
+
+/* Make every div flex by default */
+div {
+    display: flex;
+}
+
+/* Text styles */
+.strong {
+    font-weight: 600;
+}
