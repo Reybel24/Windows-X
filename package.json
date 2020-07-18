@@ -12,7 +12,10 @@
     "@fortawesome/free-solid-svg-icons": "^5.14.0",
     "@fortawesome/vue-fontawesome": "^0.1.10",
     "core-js": "^3.6.5",
+    "howler": "^2.2.0",
+    "perfect-scrollbar": "^1.5.0",
     "vue": "^2.6.11",
+    "vue-chat-scroll": "^1.4.0",
     "vue-router": "^3.2.0",
     "vuex": "^3.4.0"
   },
