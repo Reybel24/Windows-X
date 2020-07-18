@@ -15,6 +15,8 @@ import Email from '@/components/apps/AppEmail.vue';
 import Spotify from '@/components/apps/AppSpotify.vue';
 import Terminal from '@/components/apps/AppTerminal.vue';
 
+import store from '@/store';
+
 export default {
   name: 'Desktop',
   components: {
@@ -53,6 +55,12 @@ export default {
       });
       instance.$mount(); // pass nothing
       this.$refs.apps.appendChild(instance.$el);
+    },
+    lockPC() {
+      console.log("locking")
+      store.dispatch({
+        type: 'lockPC'
+      });
     }
   },
   computed: {

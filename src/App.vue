@@ -1,16 +1,21 @@
 <template>
   <div id="app">
+    <Lockscreen />
     <Desktop />
   </div>
 </template>
 
 <script>
+import Lockscreen from '@/views/Lockscreen.vue';
 import Desktop from '@/views/Desktop.vue'
 
 export default {
   name: 'app',
   components: {
+    Lockscreen,
     Desktop
+  },
+  methods: {
   }
 }
 </script>
