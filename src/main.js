@@ -19,7 +19,6 @@ Vue.use(VueChatScroll);
 
 // For font-awesome so I can use <i></i> icons
 dom.watch()
-
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.config.productionTip = false
