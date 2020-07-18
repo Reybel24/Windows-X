@@ -27,7 +27,7 @@ export default {
     return {};
   },
   methods: {
-    async openApp(app) {
+    async launchApp(app) {
       // Create instance
       // console.log(app.name)
       var _comp = this.$options.__proto__.components[app.name];
@@ -63,7 +63,7 @@ export default {
   mounted() {
     // Subscribe to relevant events
     EventBus.$on('OPEN_APP', app => {
-      this.openApp(app);
+      this.launchApp(app);
     });
   },
   destroyed() {
