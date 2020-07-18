@@ -1,5 +1,8 @@
 /* Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+@font-face {
+    font-family: 'SegoeUI';
+    src: url('~@/assets/fonts/Segoe UI.ttf') format('truetype');
+  }
 
 body {
     margin: 0;
@@ -7,7 +10,7 @@ body {
 }
 
 #app {
-    font-family: 'Open Sans', sans-serif;
+    font-family: $segoe;
     background-color: $bgcolor;
     flex-direction: column;
     background-color: $bgcolor;
