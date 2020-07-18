@@ -1,0 +1,28 @@
+{
+    "data": [
+        { "id": 0, "name": "raindrops", "artist": "Kazam", "album": "0.1", "duration": 3.00 },
+        { "id": 1, "name": "Sweden", "artist": "C418", "album": "Minecraft", "duration": 3.36 },
+        { "id": 2, "name": "Pony", "artist": "Deluxe", "album": "Polishing Peanuts EP", "duration": 3.36 },
+        { "id": 3, "name": "Midnight City", "artist": "M83", "album": "Hurry Up, We're Dreaming", "duration": 3.36 },
+        { "id": 4, "name": "Fly on the Wall", "artist": "Joey Pecoraro", "album": "Little Pear", "duration": 3.36 },
+        { "id": 5, "name": "I Love Rock 'N Roll", "artist": "Joan Jett & The Blackhearts", "album": "I Love Rock 'N' Roll", "duration": 3.36 },
+        { "id": 6, "name": "Losing My Religion", "artist": "R.E.M.", "album": "Out Of Time", "duration": 4.28 },
+        { "id": 7, "name": "Edge of Seventeen - 2016 Remaster", "artist": "Stevie Nicks", "album": "Bella Donna", "duration": 5.29 },
+        { "id": 8, "name": "Scotty Doesn't Know", "artist": "Lustra", "album": "Left for Dead", "duration": 2.55 },
+        { "id": 9, "name": "Maneater", "artist": "Daryl Hall & John Oates", "album": "H2O", "duration": 4.32 },
+        { "id": 10, "name": "Out of Touch - Remastered", "artist": "Daryl Hall & John Oates", "album": "The Very Best of Daryl Hall / John Oates", "duration": 4.10 },
+        { "id": 11, "name": "The Chain - 2004 Remaster", "artist": "Fleetwood Max", "album": "Rumours (Super Deluxe)", "duration": 4.30 },
+        { "id": 12, "name": "raindrops", "artist": "Kazam", "album": "0.1", "duration": 3.00 },
+        { "id": 13, "name": "Sweden", "artist": "C418", "album": "Minecraft", "duration": 3.36 },
+        { "id": 14, "name": "Pony", "artist": "Deluxe", "album": "Polishing Peanuts EP", "duration": 3.36 },
+        { "id": 15, "name": "Midnight City", "artist": "M83", "album": "Hurry Up, We're Dreaming", "duration": 3.36 },
+        { "id": 16, "name": "Fly on the Wall", "artist": "Joey Pecoraro", "album": "Little Pear", "duration": 3.36 },
+        { "id": 17, "name": "I Love Rock 'N Roll", "artist": "Joan Jett & The Blackhearts", "album": "I Love Rock 'N' Roll", "duration": 3.36 },
+        { "id": 18, "name": "Losing My Religion", "artist": "R.E.M.", "album": "Out Of Time", "duration": 4.28 },
+        { "id": 19, "name": "Edge of Seventeen - 2016 Remaster", "artist": "Stevie Nicks", "album": "Bella Donna", "duration": 5.29 },
+        { "id": 20, "name": "Scotty Doesn't Know", "artist": "Lustra", "album": "Left for Dead", "duration": 2.55 },
+        { "id": 21, "name": "Maneater", "artist": "Daryl Hall & John Oates", "album": "H2O", "duration": 4.32 },
+        { "id": 22, "name": "Out of Touch - Remastered", "artist": "Daryl Hall & John Oates", "album": "The Very Best of Daryl Hall / John Oates", "duration": 4.10 },
+        { "id": 23, "name": "The Chain - 2004 Remaster", "artist": "Fleetwood Max", "album": "Rumours (Super Deluxe)", "duration": 4.30 }
+    ]
+}
