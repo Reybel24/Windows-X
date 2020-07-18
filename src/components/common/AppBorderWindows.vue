@@ -1,8 +1,8 @@
 <template>
   <div class="border" @mousedown="dragWindow">
     <div class="actions-group">
-      <div class="action minimize" @click="$emit('click-maximize')"><i class="fas fa-minus" :class="'icon'"></i></div>
-      <div class="action maximize" @click="$emit('click-minimize')"><i class="fas fa-square" :class="'icon'"></i></div>
+      <div class="action minimize" @click="$emit('click-minimize')"><i class="fas fa-minus" :class="'icon'"></i></div>
+      <div class="action maximize" @click="$emit('click-maximize')"><i class="fas fa-square" :class="'icon'"></i></div>
       <div class="action exit" @click="$emit('click-close')"><i class="fas fa-times" :class="'icon'"></i></div>
     </div>
   </div>
