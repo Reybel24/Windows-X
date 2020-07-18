@@ -1,9 +1,19 @@
 <template>
-  <WinApp class="spotify" @close="onClose">
+  <WinApp
+    :style="coreStyle"
+    @close="onClose"
+    @click-maximize="maximizeApp"
+    @click-minimize="minimizeApp"
+  >
     <div class="wrapper">
       <div class="main">
         <div class="sidebar">
-          <div class="currently-playing"></div>
+          <div class="currently-playing">
+            <img
+              :src="require('@/appdata/Spotify/images/rick-astley_whenever-you-need-me.png')"
+              v-if="isPlaying"
+            />
+          </div>
         </div>
         <section class="music">
           <div class="playlist">
@@ -11,10 +21,10 @@
             <div class="details">
               <div class="label">PLAYLIST</div>
               <div class="name">Groovin'</div>
-              <div class="created">Created by reybel • 124 songs •  1 hr 39 min</div>
-              <div class="btn" @click="pressPlayPause">
-                {{ (this.isPlaying) ? "PAUSE" : "PLAY" }}
+              <div class="created">
+                Created by reybel • {{ this.songs.length }} songs • {{ Math.trunc(songsTotalDuration/60) }} hr {{ Math.trunc(songsTotalDuration%60) }} min
               </div>
+              <div class="btn" @click="pressPlayPause">{{ (this.isPlaying) ? "PAUSE" : "PLAY" }}</div>
             </div>
           </div>
           <div class="songs">
@@ -50,7 +60,10 @@
               <i class="fas fa-step-backward" :class="'icon'"></i>
             </div>
             <div class="item play-pause" @click="pressPlayPause">
-              <i class="fas" :class="[{ 'fa-pause-circle': isPlaying }, { 'fa-play-circle': !isPlaying }]"></i>
+              <i
+                class="fas"
+                :class="[{ 'fa-pause-circle': isPlaying }, { 'fa-play-circle': !isPlaying }]"
+              ></i>
             </div>
             <div class="item forward">
               <i class="fas fa-step-forward" :class="'icon'"></i>
@@ -77,8 +90,6 @@ import songs from '@/appdata/Spotify/songs.json';
 // Audio player
 import { Howl, Howler } from 'howler';
 
-import store from '@/store'
-
 export default {
   name: 'Email',
   mixins: [WinAppCore],
@@ -96,7 +107,7 @@ export default {
   methods: {
     playSong(song) {
       this.nowPlaying = song;
-      
+
       // Stop any currenly playing songs
       if (this.sound != null) this.sound.unload();
 
@@ -131,18 +142,23 @@ export default {
       this.exitApp();
     }
   },
-  mounted() {
-  },
+  mounted() {},
   computed: {
     songIsPlaying: function() {
       return this.isPlaying;
+    },
+    songsTotalDuration: function() {
+      var totalDuration = this.songs.reduce(function (accumulator, song) {
+        return accumulator + song.duration;
+      }, 0);
+      return totalDuration;
     }
   }
 };
 </script>
 
 <style scoped lang='scss'>
-.spotify {
+.win-app {
   width: 1100px;
   height: 640px;
   cursor: default;
@@ -198,7 +214,7 @@ export default {
             height: 30px;
             border-radius: 20px;
             color: white;
-            font-size: .7em;
+            font-size: 0.7em;
             background-color: #1db954;
             align-items: center;
             justify-content: center;
@@ -206,12 +222,12 @@ export default {
 
             &:hover {
               background-color: rgb(30, 215, 96);
-              transform: scale(1.04, 1.04)
+              transform: scale(1.04, 1.04);
             }
           }
 
           .label {
-            font-size: .6em;
+            font-size: 0.6em;
           }
 
           .name {
@@ -220,7 +236,7 @@ export default {
           }
 
           .created {
-            font-size: .8em;
+            font-size: 0.8em;
           }
         }
       }
