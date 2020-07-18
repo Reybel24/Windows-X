@@ -40,7 +40,7 @@ export default {
   // filter: blur(10px);
 
   .windows-logo {
-    width: auto;
+    width: 27px;
     height: 100%;
     align-items: center;
     padding: 0 9px 0 9px;
