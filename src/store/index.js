@@ -17,6 +17,7 @@ export default new Vuex.Store({
     ],
     processes: [
     ],
+    locked: true,
 
     // These apps are pinned to the taskbar
     apps_taskbar: [
@@ -57,6 +58,9 @@ export default new Vuex.Store({
         // Count all
         return state.processes.length
       }
+    },
+    getIsLocked: state => {
+      return state.locked
     }
   },
   mutations: {
@@ -91,6 +95,18 @@ export default new Vuex.Store({
     destroyProccess({ commit, state }, payload) {
       return new Promise((resolve, reject) => {
         commit('removeProcess', payload.processId)
+        resolve(0)
+      });
+    },
+    unlockPC({ commit, state }, payload) {
+      return new Promise((resolve, reject) => {
+        state.locked = false
+        resolve(0)
+      });
+    },
+    lockPC({ commit, state }, payload) {
+      return new Promise((resolve, reject) => {
+        state.locked = true
         resolve(0)
       });
     }

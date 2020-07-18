@@ -21,9 +21,10 @@ export default {
         y: 400,
       },
       winSize: {
-        width: 1100,
-        height: 640
-      }
+        width: 1400,
+        height: 740
+      },
+      isMinimized: false
     };
   },
   methods: {
@@ -45,11 +46,11 @@ export default {
       this.winPos.y = 0;
     },
     minimizeApp() {
-      console.log("minimizing")
       this.winSize.width = 800;
       this.winSize.height = 500; // taskbar height
       this.winPos.x = 400;
       this.winPos.y = 300;
+      // this.isMinimized = true;
     }
   },
   computed: {
@@ -59,6 +60,7 @@ export default {
         height: this.winSize.height + 'px',
         marginTop: this.winPos.x + 'px',
         marginLeft: this.winPos.y + 'px',
+        opacity: (this.isMinimized) ? 0 : 1
       };
     }
   }

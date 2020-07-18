@@ -11,7 +11,7 @@
           <div class="currently-playing">
             <img
               :src="require('@/appdata/Spotify/images/rick-astley_whenever-you-need-me.png')"
-              v-if="isPlaying"
+              v-if="nowPlaying != null"
             />
           </div>
         </div>
@@ -115,7 +115,7 @@ export default {
         src: [require('@/appdata/Spotify/media/rick.mp3')],
         autoplay: true,
         loop: true,
-        volume: 100,
+        volume: 2,
         onend: function() {
           console.log('Finished!');
         }
@@ -179,8 +179,13 @@ export default {
       .currently-playing {
         margin-top: auto;
         width: 100%;
-        height: 200px;
+        height: 230px;
         background-color: rgb(31, 31, 31);
+
+        img {
+          width: 100%;
+          height: auto;
+        }
       }
     }
 

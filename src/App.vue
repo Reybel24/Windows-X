@@ -1,16 +1,21 @@
 <template>
   <div id="app">
+    <Lockscreen />
     <Desktop />
   </div>
 </template>
 
 <script>
+import Lockscreen from '@/views/Lockscreen.vue';
 import Desktop from '@/views/Desktop.vue'
 
 export default {
   name: 'app',
   components: {
+    Lockscreen,
     Desktop
+  },
+  methods: {
   }
 }
 </script>
@@ -25,9 +30,6 @@ div {
   display: flex;
 }
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
   ;
