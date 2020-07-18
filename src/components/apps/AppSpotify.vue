@@ -69,25 +69,21 @@
 <script>
 // App functionality
 import WinApp from '@/components/apps/WinApp';
+import WinAppCore from '@/components/core/WinAppCore';
 
 // Appdata
 import songs from '@/appdata/Spotify/songs.json';
 
 // Audio player
 import { Howl, Howler } from 'howler';
-// import '@/appdata/Spotify/media/rick.mp3'
+
+import store from '@/store'
 
 export default {
   name: 'Email',
+  mixins: [WinAppCore],
   components: {
     WinApp
-  },
-  props: {
-    app: {
-      type: Object,
-      default: () => {},
-      required: false
-    }
   },
   data() {
     return {
@@ -99,7 +95,6 @@ export default {
   },
   methods: {
     playSong(song) {
-      console.log('Playing ' + song.name);
       this.nowPlaying = song;
       
       // Stop any currenly playing songs
@@ -115,7 +110,6 @@ export default {
         }
       });
       this.isPlaying = true;
-      console.log(this.isPlaying)
     },
     pressPlayPause() {
       if (this.sound == null) return;
@@ -128,19 +122,16 @@ export default {
         this.sound.play();
         this.isPlaying = true;
       }
-      console.log("is playing: " + this.isPlaying)
     },
     onClose() {
-      // Clean up
-      // Stop any currenly playing songs
+      // Any app-specific clean-up
       if (this.sound != null) this.sound.unload();
 
-      // Destroy self
-      this.$destroy();
+      // Finally
+      this.exitApp();
     }
   },
   mounted() {
-    console.log(this.songs);
   },
   computed: {
     songIsPlaying: function() {
