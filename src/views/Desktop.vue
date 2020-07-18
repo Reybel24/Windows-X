@@ -13,13 +13,15 @@ import Taskbar from '@/views/Taskbar.vue'
 // Apps
 import Email from '@/components/apps/AppEmail.vue'
 import Spotify from '@/components/apps/AppSpotify.vue'
+import Terminal from '@/components/apps/AppTerminal.vue'
 
 export default {
   name: 'Desktop',
   components: {
     Taskbar,
     Email,
-    Spotify
+    Spotify,
+    Terminal
   },
   data () {
     return {
@@ -29,14 +31,14 @@ export default {
   },
   computed: {
     desktopWallpaper: function () {
-      return `url(${require('@/assets/wallpapers/diamond.jpg')})`
+      return `url(${require('@/assets/wallpapers/windows-10.jpg')})`
     }
   },
   mounted () {
     // Subscribe to relevant events
     EventBus.$on('OPEN_APP', (app) => {
       // Create instance
-      console.log(app.name)
+      // console.log(app.name)
       var _comp = this.$options.__proto__.components[app.name]
 
       // Check that a matching component was found

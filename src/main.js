@@ -10,6 +10,10 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 library.add(fas)
 
+// For scrolling when new content is added
+import VueChatScroll from 'vue-chat-scroll'
+Vue.use(VueChatScroll);
+
 // Event bus
 // import EventBus from '@/util/event-bus.js'
 

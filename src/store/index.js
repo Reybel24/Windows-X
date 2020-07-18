@@ -11,7 +11,8 @@ export default new Vuex.Store({
       { name: 'Spotify', compontent: 'FileExplorer', icon: 'icon_spotify', installed: 1, pinned: 1, isOpen: true },
       { name: 'Steam', compontent: 'Steam', icon: 'icon_steam', installed: 1, pinned: 1, isOpen: false },
       { name: 'Microsoft Word', compontent: 'MicrosoftWord', icon: 'icon_word', installed: 1, pinned: 1, isOpen: false },
-      { name: 'Email', compontent: 'Outlook', icon: 'icon_outlook', installed: 1, pinned: 1, isOpen: false }
+      { name: 'Email', compontent: 'Outlook', icon: 'icon_outlook', installed: 1, pinned: 1, isOpen: false },
+      { name: 'Terminal', compontent: 'Terminal', icon: 'icon_terminal', installed: 1, pinned: 1, isOpen: false }
     ],
     // These apps are pinned to the taskbar
     apps_taskbar: [
@@ -20,7 +21,8 @@ export default new Vuex.Store({
       'Spotify',
       'Steam',
       'Email',
-      'Microsoft Word'
+      'Microsoft Word',
+      'Terminal'
     ]
   },
   getters: {
