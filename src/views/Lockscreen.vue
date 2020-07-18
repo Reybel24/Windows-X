@@ -11,11 +11,17 @@
         <div class="date">Saturday, July 18</div>
       </div>
     </div>
+    <div class="dimmer" :style="{ opacity: (showingSignIn) ? .65 : 0 }"></div>
     <div class="sign-in" :class="{ fadeIn: showingSignIn }">
       <div class="avatar" :style="{ backgroundImage: avatar }"></div>
       <div class="name">Tony Stark</div>
-      <input type="password" ref="pass" placeholder="Password" @input="checkPassword($event.target.value)" />
-      <div class="hint">Try 'spider'</div>
+      <input
+        type="password"
+        ref="pass"
+        placeholder="Password"
+        @input="checkPassword($event.target.value)"
+      />
+      <div class="hint">Pshh...Try 'spider'</div>
     </div>
   </div>
 </template>
@@ -59,7 +65,7 @@ export default {
   },
   computed: {
     lockScreenWallpaper: function() {
-      return `url(${require('@/assets/wallpapers/earth.jpg')})`;
+      return `url(${require('@/assets/wallpapers/sandwaves.jpg')})`;
     },
     avatar: function() {
       return `url(${require('@/assets/avatars/spiderman.jpg')})`;
@@ -98,6 +104,10 @@ export default {
     height: 100vh;
     position: absolute;
     transition: 2s;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
 
     .dateTime {
       margin-top: auto;
@@ -146,7 +156,7 @@ export default {
 
     .hint {
       color: white;
-      font-size: .8;
+      font-size: 0.8;
       margin-top: 16px;
     }
 
@@ -159,6 +169,16 @@ export default {
   }
 }
 
+.dimmer {
+  background-color: rgb(26, 26, 26);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: 1.5s;
+}
+
+// Animations
 .fadeIn {
   animation: fadeAnimIn 1s ease-in forwards;
 }
@@ -171,7 +191,7 @@ export default {
   }
 }
 .fadeOut {
-  animation: fadeAnimOut .7s ease-in forwards;
+  animation: fadeAnimOut 0.7s ease-in forwards;
 }
 @keyframes fadeAnimOut {
   from {
