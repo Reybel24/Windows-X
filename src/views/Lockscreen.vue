@@ -14,14 +14,14 @@
     <div class="dimmer" :style="{ opacity: (showingSignIn) ? .65 : 0 }"></div>
     <div class="sign-in" :class="{ fadeIn: showingSignIn }">
       <div class="avatar" :style="{ backgroundImage: avatar }"></div>
-      <div class="name">Tony Stark</div>
+      <div class="name">Peter Parker</div>
       <input
         type="password"
         ref="pass"
         placeholder="Password"
         @input="checkPassword($event.target.value)"
       />
-      <div class="hint">Pshh...Try 'spider'</div>
+      <div class="hint">Psstt...Try 'spider'</div>
     </div>
   </div>
 </template>
@@ -79,7 +79,8 @@ export default {
     lockImgStyle: function() {
       return {
         backgroundImage: this.lockScreenWallpaper,
-        filter: this.showingSignIn ? 'blur(12px)' : 0
+        filter: this.showingSignIn ? 'blur(12px)' : 'blur(0px)',
+        transform: this.showingSignIn ? 'scale(1.1)' : 'scale(1)'
       };
     }
   },
