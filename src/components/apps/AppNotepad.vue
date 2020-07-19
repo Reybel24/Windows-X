@@ -22,13 +22,6 @@ export default {
   components: {
     WinApp
   },
-  props: {
-    payload: {
-      type: Object,
-      default: null,
-      required: false
-    }
-  },
   data() {
     return {
       fileText: 'this is some sample text'
@@ -39,7 +32,7 @@ export default {
   },
   mounted() {
     // Set initial window position
-    this.setInitialPos(400, 180)
+    this.setInitialPos(400, 180);
 
     // Set text
     if (this.payload != null) {

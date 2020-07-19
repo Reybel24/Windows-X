@@ -12,13 +12,18 @@ export default {
       type: Number,
       default: -1,
       required: false
+    },
+    payload: {
+      type: Object,
+      default: null,
+      required: false
     }
   },
   data() {
     return {
       winPos: {
         x: 200,
-        y: 400,
+        y: 400
       },
       winSize: {
         width: 1400,
@@ -51,6 +56,10 @@ export default {
       this.winPos.x = 400;
       this.winPos.y = 300;
       // this.isMinimized = true;
+    },
+    setInitialPos(x, y) {
+      this.winPos.x = x;
+      this.winPos.y = y;
     }
   },
   computed: {
@@ -58,9 +67,9 @@ export default {
       return {
         width: this.winSize.width + 'px',
         height: this.winSize.height + 'px',
-        marginTop: this.winPos.x + 'px',
-        marginLeft: this.winPos.y + 'px',
-        opacity: (this.isMinimized) ? 0 : 1
+        marginTop: this.winPos.y + 'px',
+        marginLeft: this.winPos.x + 'px',
+        opacity: this.isMinimized ? 0 : 1
       };
     }
   }

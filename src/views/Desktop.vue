@@ -27,6 +27,7 @@ import Email from '@/components/apps/AppEmail.vue';
 import Spotify from '@/components/apps/AppSpotify.vue';
 import FileExplorer from '@/components/apps/AppFileExplorer.vue';
 import Terminal from '@/components/apps/AppTerminal.vue';
+import Notepad from '@/components/apps/AppNotepad.vue';
 
 import store from '@/store';
 
@@ -38,7 +39,8 @@ export default {
     Email,
     Spotify,
     Terminal,
-    FileExplorer
+    FileExplorer,
+    Notepad
   },
   data() {
     return {
@@ -46,7 +48,7 @@ export default {
     };
   },
   methods: {
-    async launchApp(app) {
+    async launchApp(app, payload = null) {
       // Create instance
       // console.log(app.name)
       var _comp = this.$options.__proto__.components[app.component];
@@ -68,7 +70,7 @@ export default {
 
       var ComponentClass = Vue.extend(_comp);
       var instance = new ComponentClass({
-        propsData: { app: app, procId: _procId }
+        propsData: { app: app, procId: _procId, payload: payload }
       });
       instance.$mount(); // pass nothing
       this.$refs.apps.appendChild(instance.$el);
@@ -78,6 +80,14 @@ export default {
       store.dispatch({
         type: 'lockPC'
       });
+    },
+    openFile(file) {
+      // Open app depending on type
+      switch (file.ext) {
+        case 'txt':
+          var app = this.$store.getters.getAppByName('Notepad');
+          EventBus.$emit('OPEN_APP', app, { file: file });
+      }
     }
   },
   computed: {
@@ -87,13 +97,18 @@ export default {
   },
   mounted() {
     // Subscribe to relevant events
-    EventBus.$on('OPEN_APP', app => {
-      this.launchApp(app);
+    EventBus.$on('OPEN_APP', (app, payload = null) => {
+      this.launchApp(app, payload);
+    });
+
+    EventBus.$on('OPEN_FILE', file => {
+      this.openFile(file);
     });
   },
   destroyed() {
     // Stop listening.
     EventBus.$off('OPEN_APP');
+    EventBus.$off('OPEN_FILE');
   }
 };
 </script>
