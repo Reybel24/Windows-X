@@ -149,8 +149,8 @@ export default {
     }
   },
   mounted() {
-    // const openFolder = this.getStructByAbsPath(this.activeDir);
-    // console.log(openFolder);
+    // Set initial window position
+    this.setInitialPos(550, 250)
   },
   computed: {
     getActiveDir: function() {

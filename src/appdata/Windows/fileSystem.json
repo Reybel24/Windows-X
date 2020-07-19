@@ -44,6 +44,18 @@
             "ext": "txt",
             "path": "~/Desktop/notes",
             "real_path": "@/appdata/Windows/files/movies.txt"
+        },
+        {
+            "type": "folder",
+            "name": "Pictures",
+            "path": "~/Desktop"
+        },
+        {
+            "type": "file",
+            "name": "secret christmas photo",
+            "ext": "jpg",
+            "path": "~/Desktop/Pictures",
+            "real_path": "@/appdata/Windows/files/movies.txt"
         }
     ]
 }
