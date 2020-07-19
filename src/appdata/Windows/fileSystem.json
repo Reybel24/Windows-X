@@ -19,13 +19,15 @@
             "type": "file",
             "name": "to-do",
             "ext": "txt",
-            "path": "~/Desktop/notes"
+            "path": "~/Desktop/notes",
+            "real_path": "@/appdata/Windows/files/to-do.txt"
         },
         {
             "type": "file",
             "name": "poems",
             "ext": "txt",
-            "path": "~/Desktop/notes/misc"
+            "path": "~/Desktop/notes/misc",
+            "real_path": "@/appdata/Windows/files/poems.txt"
         },
         {
             "type": "file",
