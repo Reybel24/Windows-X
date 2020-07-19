@@ -14,14 +14,14 @@ Don't believe me? Check it out for yourself below.
 
 **Lock Screen**
 
-[![lock screen](src/assets/screen/lockscreen.gif)]()
+![lock screen](https://github.com/Reybel24/Windows-X/blob/dev/src/assets/screens/lockscreen.gif)
 
 **Desktop**
 
-[![desktop](src/assets/screen/desktop.gif)]()
+![lock screen](https://github.com/Reybel24/Windows-X/blob/dev/src/assets/screens/desktop.gif)
 
 **Apps**
 
-[![app](src/assets/screen/spotify.gif)]()
+![lock screen](https://github.com/Reybel24/Windows-X/blob/dev/src/assets/screens/spotify.gif)
 
 ---
