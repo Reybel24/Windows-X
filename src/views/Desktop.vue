@@ -25,6 +25,7 @@ import DesktopIcon from '@/components/DesktopIcon.vue';
 // Apps
 import Email from '@/components/apps/AppEmail.vue';
 import Spotify from '@/components/apps/AppSpotify.vue';
+import FileExplorer from '@/components/apps/AppFileExplorer.vue';
 import Terminal from '@/components/apps/AppTerminal.vue';
 
 import store from '@/store';
@@ -36,7 +37,8 @@ export default {
     DesktopIcon,
     Email,
     Spotify,
-    Terminal
+    Terminal,
+    FileExplorer
   },
   data() {
     return {
@@ -47,11 +49,11 @@ export default {
     async launchApp(app) {
       // Create instance
       // console.log(app.name)
-      var _comp = this.$options.__proto__.components[app.name];
+      var _comp = this.$options.__proto__.components[app.component];
 
       // Check that a matching component was found
       if (_comp == undefined) {
-        console.log('App not installed (' + app.name + ')');
+        console.log('App not installed (' + app.component + ')');
         return;
       }
 

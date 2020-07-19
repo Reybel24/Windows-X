@@ -1,0 +1,49 @@
+{
+    "C": [
+        {
+            "type": "folder",
+            "name": "Program Files",
+            "path": "~"
+        },
+        {
+            "type": "folder",
+            "name": "Desktop",
+            "path": "~"
+        },
+        {
+            "type": "folder",
+            "name": "notes",
+            "path": "~/Desktop"
+        },
+        {
+            "type": "file",
+            "name": "to-do",
+            "ext": "txt",
+            "path": "~/Desktop/notes"
+        },
+        {
+            "type": "file",
+            "name": "poems",
+            "ext": "txt",
+            "path": "~/Desktop/notes/misc"
+        },
+        {
+            "type": "file",
+            "name": "shopping-list",
+            "ext": "txt",
+            "path": "~/Desktop/notes"
+        },
+        {
+            "type": "folder",
+            "name": "misc",
+            "path": "~/Desktop/notes"
+        },
+        {
+            "type": "file",
+            "name": "movies",
+            "ext": "txt",
+            "path": "~/Desktop/notes",
+            "real_path": "@/appdata/Windows/files/movies.txt"
+        }
+    ]
+}
