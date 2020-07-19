@@ -112,10 +112,17 @@ export default {
 
       // Stop any currenly playing songs
       if (this.sound != null) this.sound.unload();
+      
+      try {
+        var src = require('@/appdata/Spotify/media/' + song.name + ' - ' + song.artist + '.mp3') 
+      } catch (error) {
+        // Error importing song file
+        // Play some rick astley instead
+        var src = require('@/appdata/Spotify/media/Never Gonna Give You Up - Rick Astley.mp3')
+      }
 
       this.sound = new Howl({
-        // src: [require('@/appdata/Spotify/media/rick.mp3')],
-        src: [require('@/appdata/Spotify/media/' + song.name + ' - ' + song.artist + '.mp3')],
+        src: [src],
         autoplay: true,
         loop: true,
         volume: 2,

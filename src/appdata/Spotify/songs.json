@@ -24,6 +24,7 @@
         { "id": 20, "name": "Scotty Doesn't Know", "artist": "Lustra", "album": "Left for Dead", "duration": 2.55 },
         { "id": 21, "name": "Maneater", "artist": "Daryl Hall & John Oates", "album": "H2O", "duration": 4.32 },
         { "id": 22, "name": "Out of Touch - Remastered", "artist": "Daryl Hall & John Oates", "album": "The Very Best of Daryl Hall / John Oates", "duration": 4.10 },
-        { "id": 23, "name": "The Chain - 2004 Remaster", "artist": "Fleetwood Max", "album": "Rumours (Super Deluxe)", "duration": 4.30 }
+        { "id": 23, "name": "The Chain - 2004 Remaster", "artist": "Fleetwood Mac", "album": "Rumours (Super Deluxe)", "duration": 4.30 },
+        { "id": 25, "name": "Hate Is an Attractive Force", "artist": "SLEEP RADIO", "album": "Hate Is an Attractive Force", "duration": 2.51 }
     ]
 }
