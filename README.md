@@ -14,14 +14,14 @@ Don't believe me? Check it out for yourself below.
 
 **Lock Screen**
 
-![Recordit GIF](src/assets/screen/lockscreen.gif)
+[![lock screen](src/assets/screen/lockscreen.gif)]()
 
 **Desktop**
 
-![Recordit GIF](src/assets/screen/desktop.gif)
+[![desktop](src/assets/screen/desktop.gif)]()
 
 **Apps**
 
-![Recordit GIF](src/assets/screen/spotify.gif)
+[![app](src/assets/screen/spotify.gif)]()
 
 ---
