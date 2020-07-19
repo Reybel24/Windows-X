@@ -116,6 +116,7 @@ export default {
   margin-left: 300px;
   position: absolute;
   cursor: default;
+  z-index: 1;
 
   &:hover {
     background-color: rgb(99, 99, 99, 0.6) !important;

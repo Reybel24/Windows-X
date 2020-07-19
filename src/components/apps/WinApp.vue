@@ -1,5 +1,11 @@
 <template>
-  <div class="win-app" ref="winapp">
+  <div
+    class="win-app"
+    ref="winapp"
+    @mousedown="focusApp"
+    :class="{ 'focused': focused }"
+    v-on-clickaway="away"
+  >
     <!-- Border -->
     <AppBorder
       @drag-window="dragMouseDown"
@@ -21,10 +27,11 @@ import AppBorder from '@/components/common/AppBorderWindows.vue';
 
 // Functionality
 import Draggable from '@/util/Draggable';
+import { mixin as clickaway } from 'vue-clickaway';
 
 export default {
   name: 'WinApp',
-  mixins: [Draggable],
+  mixins: [Draggable, clickaway],
   components: {
     AppBorder
   },
@@ -35,7 +42,8 @@ export default {
         clientY: undefined,
         movementX: 0,
         movementY: 0
-      }
+      },
+      focused: true
     };
   },
   methods: {
@@ -43,7 +51,21 @@ export default {
       this.$emit('close');
       this.$destroy();
       this.$el.parentNode.removeChild(this.$el);
+    },
+    focusApp() {
+      this.focused = true;
+    },
+    away: function() {
+      if (this.focused) {
+        this.focused = false;
+      }
     }
   }
 };
 </script>
+
+<style scoped lang="scss">
+.focused {
+  z-index: 5 !important;
+}
+</style>
