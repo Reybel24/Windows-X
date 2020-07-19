@@ -6,7 +6,7 @@
 </template>
 
 <script>
-// import { EventBus } from '@/util/event-bus.js';
+import { EventBus } from '@/util/event-bus.js';
 
 // Drag n drop
 // import Draggable from '@/util/Draggable';
@@ -54,19 +54,9 @@ export default {
       if (this.struct.type == 'folder') {
         this.$emit('nav-to', this.fullPath);
       } else {
-        // Try opening file
-        console.log('opening file');
         if ('real_path' in this.struct) {
-          // Get file
-          try {
-            var fileName = this.struct.name + '.' + this.struct.ext;
-            var file = require('@/appdata/Windows/files/' + fileName);
-            var fileContent = file.default
-            console.log(fileContent);
-          } catch (error) {
-            console.log('error opening file');
-            console.log(error);
-          }
+          // Open file
+          EventBus.$emit('OPEN_FILE', this.struct);
         }
       }
     }
@@ -76,7 +66,14 @@ export default {
       if (this.struct.type == 'folder') {
         return `${require('@/assets/icons/icon_folder.png')}`;
       } else {
-        return `${require('@/assets/icons/icon_picture.png')}`;
+        // Get appropriate icon depending on ext
+        switch (this.struct.ext) {
+          case 'txt':
+            return `${require('@/assets/icons/icon_notepad.png')}`;
+          case 'png':
+          case 'jpg':
+            return `${require('@/assets/icons/icon_picture.png')}`;
+        }
       }
     },
     fullPath: function() {
@@ -91,12 +88,13 @@ export default {
 .struct {
   color: rgb(49, 49, 49);
   width: 100px;
-  height: 115px;
+  max-height: 150px;
   padding: 5px 5px 5px 5px;
   align-items: center;
   justify-content: center;
   border-radius: 5px;
   flex-direction: column;
+  overflow: hidden;
 
   &:hover {
     background-color: rgb(229, 243, 255);
@@ -118,7 +116,7 @@ export default {
 
   img {
     width: auto;
-    height: 57%;
+    height: 70px;
     margin-top: 9px;
   }
 }
