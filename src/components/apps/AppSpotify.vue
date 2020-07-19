@@ -21,14 +21,15 @@
             <div class="details">
               <div class="label">PLAYLIST</div>
               <div class="name">Groovin'</div>
-              <div class="created">
-                Created by reybel • {{ this.songs.length }} songs • {{ Math.trunc(songsTotalDuration/60) }} hr {{ Math.trunc(songsTotalDuration%60) }} min
-              </div>
-              <div class="btn" @click="pressPlayPause">{{ (this.isPlaying) ? "PAUSE" : "PLAY" }}</div>
+              <div
+                class="created"
+              >Created by reybel • {{ this.songs.length }} songs • {{ Math.trunc(songsTotalDuration/60) }} hr {{ Math.trunc(songsTotalDuration%60) }} min</div>
+              <div class="btn" @click="(nowPlaying == null) ? playRandomSong() : pressPlayPause()">{{ (isPlaying) ? "PAUSE" : "PLAY" }}</div>
             </div>
           </div>
           <div class="songs">
             <div class="header">
+              <div class="column like"></div>
               <div class="column title">TITLE</div>
               <div class="column">ARTIST</div>
               <div class="column">ALBUM</div>
@@ -41,6 +42,9 @@
               @dblclick="playSong(song)"
               :class="{ playing : (nowPlaying != null && song.id == nowPlaying.id) }"
             >
+              <div class="cell like">
+                <i class="fas fa-heart" :class="'icon'"></i>
+              </div>
               <div class="cell title">{{ song.name }}</div>
               <div class="cell artist">{{ song.artist }}</div>
               <div class="cell album">{{ song.album }}</div>
@@ -59,11 +63,9 @@
             <div class="item rewind">
               <i class="fas fa-step-backward" :class="'icon'"></i>
             </div>
-            <div class="item play-pause" @click="pressPlayPause">
-              <i
-                class="fas"
-                :class="[{ 'fa-pause-circle': isPlaying }, { 'fa-play-circle': !isPlaying }]"
-              ></i>
+            <div class="item play-pause" @click="(nowPlaying == null) ? playRandomSong() : pressPlayPause()">
+              <div v-show="(isPlaying == false)"><i class="fas fa-play-circle"></i></div>
+              <div v-show="isPlaying"><i class="fas fa-pause-circle"></i></div>
             </div>
             <div class="item forward">
               <i class="fas fa-step-forward" :class="'icon'"></i>
@@ -112,7 +114,8 @@ export default {
       if (this.sound != null) this.sound.unload();
 
       this.sound = new Howl({
-        src: [require('@/appdata/Spotify/media/rick.mp3')],
+        // src: [require('@/appdata/Spotify/media/rick.mp3')],
+        src: [require('@/appdata/Spotify/media/' + song.name + ' - ' + song.artist + '.mp3')],
         autoplay: true,
         loop: true,
         volume: 2,
@@ -123,6 +126,7 @@ export default {
       this.isPlaying = true;
     },
     pressPlayPause() {
+      console.log("play pausing")
       if (this.sound == null) return;
       if (this.sound.playing()) {
         // Pause it
@@ -140,6 +144,11 @@ export default {
 
       // Finally
       this.exitApp();
+    },
+    playRandomSong() {
+      console.log("playing random")
+      const _randSong = this.songs[0];
+      this.playSong(_randSong)
     }
   },
   mounted() {},
@@ -148,7 +157,7 @@ export default {
       return this.isPlaying;
     },
     songsTotalDuration: function() {
-      var totalDuration = this.songs.reduce(function (accumulator, song) {
+      var totalDuration = this.songs.reduce(function(accumulator, song) {
         return accumulator + song.duration;
       }, 0);
       return totalDuration;
@@ -264,6 +273,10 @@ export default {
               color: white;
             }
 
+            &.like {
+              width: 25px;
+            }
+
             &.title {
               width: 40%;
             }
@@ -279,7 +292,7 @@ export default {
           border-top: 1px solid #272727;
           border-bottom: 1px solid #272727;
           align-items: center;
-          padding: 14px 0 10px 14px;
+          padding: 14px 0 10px 0px;
           white-space: nowrap;
 
           &:hover {
@@ -296,8 +309,12 @@ export default {
             text-align: left;
             overflow: hidden;
 
+            &.like {
+              width: 25px;
+            }
+
             &.title {
-              // width: 40%;
+              width: 40%;
             }
 
             &.duration {
