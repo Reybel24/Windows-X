@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import TaskbarApp from '@/components/TaskbarApp.vue'
+import TaskbarApp from '@/components/layout/TaskbarApp.vue'
 
 export default {
   name: 'Taskbar',
@@ -37,7 +37,7 @@ export default {
   opacity: .94;
   align-items: center;
   padding: 0 8px 0 0px;
-  // filter: blur(10px);
+  z-index: 10;
 
   .windows-logo {
     width: 27px;

@@ -3,7 +3,7 @@
 export default {
   methods: {
     dragMouseDown ($event) {
-      // event.preventDefault()
+      event.preventDefault()
       // get the mouse cursor position at startup:
       this.positions.clientX = event.clientX
       this.positions.clientY = event.clientY
@@ -11,7 +11,7 @@ export default {
       document.onmouseup = this.closeDragElement
     },
     elementDrag: function (event) {
-      // event.preventDefault()
+      event.preventDefault()
       this.positions.movementX = this.positions.clientX - event.clientX
       this.positions.movementY = this.positions.clientY - event.clientY
       this.positions.clientX = event.clientX

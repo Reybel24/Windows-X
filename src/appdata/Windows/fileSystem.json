@@ -1,0 +1,63 @@
+{
+    "C": [
+        {
+            "type": "folder",
+            "name": "Program Files",
+            "path": "~"
+        },
+        {
+            "type": "folder",
+            "name": "Desktop",
+            "path": "~"
+        },
+        {
+            "type": "folder",
+            "name": "notes",
+            "path": "~/Desktop"
+        },
+        {
+            "type": "file",
+            "name": "to-do",
+            "ext": "txt",
+            "path": "~/Desktop/notes",
+            "real_path": "@/appdata/Windows/files/to-do.txt"
+        },
+        {
+            "type": "file",
+            "name": "poems",
+            "ext": "txt",
+            "path": "~/Desktop/notes/misc",
+            "real_path": "@/appdata/Windows/files/poems.txt"
+        },
+        {
+            "type": "file",
+            "name": "shopping-list",
+            "ext": "txt",
+            "path": "~/Desktop/notes"
+        },
+        {
+            "type": "folder",
+            "name": "misc",
+            "path": "~/Desktop/notes"
+        },
+        {
+            "type": "file",
+            "name": "movies",
+            "ext": "txt",
+            "path": "~/Desktop/notes",
+            "real_path": "@/appdata/Windows/files/movies.txt"
+        },
+        {
+            "type": "folder",
+            "name": "Pictures",
+            "path": "~/Desktop"
+        },
+        {
+            "type": "file",
+            "name": "secret christmas photo",
+            "ext": "jpg",
+            "path": "~/Desktop/Pictures",
+            "real_path": "@/appdata/Windows/files/movies.txt"
+        }
+    ]
+}
