@@ -82,8 +82,8 @@
 </template>
 
 <script>
-// App functionality
-import WinApp from '@/components/apps/WinApp';
+// Required
+import WinApp from '@/components/core/WinApp';
 import WinAppCore from '@/components/core/WinAppCore';
 
 // Appdata

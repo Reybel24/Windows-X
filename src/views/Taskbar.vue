@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import TaskbarApp from '@/components/TaskbarApp.vue'
+import TaskbarApp from '@/components/layout/TaskbarApp.vue'
 
 export default {
   name: 'Taskbar',

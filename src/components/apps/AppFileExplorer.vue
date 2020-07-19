@@ -31,15 +31,15 @@
 </template>
 
 <script>
-// App functionality
-import WinApp from '@/components/apps/WinApp';
+// Required
+import WinApp from '@/components/core/WinApp';
 import WinAppCore from '@/components/core/WinAppCore';
 
 // C:/ "hard drive"
 import fileSystem from '@/appdata/Windows/fileSystem.json';
 
 // File / folder item
-import Struct from '@/components/Struct';
+import Struct from '@/components/layout/Struct';
 
 export default {
   name: 'FileExplorer',
@@ -51,7 +51,7 @@ export default {
   data() {
     return {
       drive_c: fileSystem.C,
-      activeDir: '~/Desktop/notes' // Default open dir
+      activeDir: '~/Desktop' // Default open dir
     };
   },
   methods: {

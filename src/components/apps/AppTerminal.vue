@@ -40,11 +40,12 @@
 </template>
 
 <script>
-// App functionality
-import WinApp from '@/components/apps/WinApp'
+// Required
+import WinApp from '@/components/core/WinApp';
+import WinAppCore from '@/components/core/WinAppCore';
 
 // UI
-import AppBorder from "@/components/common/AppBorder.vue";
+import AppBorder from "@/components/layout/AppBorder.vue";
 // import PerfectScrollbar from 'perfect-scrollbar';
 
 export default {

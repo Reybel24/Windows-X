@@ -23,7 +23,7 @@
 
 <script>
 // Basic app UI
-import AppBorder from '@/components/common/AppBorderWindows.vue';
+import AppBorder from '@/components/layout/AppBorderWindows.vue';
 
 // Functionality
 import Draggable from '@/util/Draggable';
