@@ -30,7 +30,7 @@ export default new Vuex.Store({
     ],
     processes: [
     ],
-    locked: false,
+    locked: true,
 
     // These apps are pinned to the taskbar
     taskbarShortcuts: [
