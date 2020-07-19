@@ -7,20 +7,31 @@ import { randomNumberBetween } from "@/util/common.js";
 export default new Vuex.Store({
   state: {
     apps: [
-      { name: 'Firefox', component: 'FireFox', icon: 'icon_firefox', installed: 1, pinned: 1, isOpen: true, stackable: true },
-      { name: 'File Explorer', compontent: 'FileExplorer', icon: 'icon_file-explorer', installed: 1, pinned: 1, isOpen: false, stackable: true },
-      { name: 'Spotify', compontent: 'FileExplorer', icon: 'icon_spotify', installed: 1, pinned: 1, isOpen: true, stackable: false },
-      { name: 'Steam', compontent: 'Steam', icon: 'icon_steam', installed: 1, pinned: 1, isOpen: false, stackable: false },
-      { name: 'Microsoft Word', compontent: 'MicrosoftWord', icon: 'icon_word', installed: 1, pinned: 1, isOpen: false, stackable: true },
-      { name: 'Email', compontent: 'Outlook', icon: 'icon_outlook', installed: 1, pinned: 1, isOpen: false, stackable: false },
-      { name: 'Terminal', compontent: 'Terminal', icon: 'icon_terminal', installed: 1, pinned: 1, isOpen: false, stackable: true }
+      { appId: 'a0', name: 'Recycle Bin', component: 'Recycle', icon: 'icon_recycle-bin', installed: 1, pinned: 0, isOpen: false, stackable: true },
+      { appId: 'b0', name: 'Firefox', component: 'FireFox', icon: 'icon_firefox', installed: 1, pinned: 1, isOpen: true, stackable: true },
+      { appId: 'a1', name: 'File Explorer', compontent: 'FileExplorer', icon: 'icon_file-explorer', installed: 1, pinned: 1, isOpen: false, stackable: true },
+      { appId: 'b2', name: 'Spotify', compontent: 'FileExplorer', icon: 'icon_spotify', installed: 1, pinned: 1, isOpen: true, stackable: false },
+      { appId: 'b3', name: 'Steam', compontent: 'Steam', icon: 'icon_steam', installed: 1, pinned: 1, isOpen: false, stackable: false },
+      { appId: 'b4', name: 'Microsoft Word', compontent: 'MicrosoftWord', icon: 'icon_word', installed: 1, pinned: 1, isOpen: false, stackable: true },
+      { appId: 'a5', name: 'Email', compontent: 'Outlook', icon: 'icon_outlook', installed: 1, pinned: 1, isOpen: false, stackable: false },
+      { appId: 'a6', name: 'Terminal', compontent: 'Terminal', icon: 'icon_terminal', installed: 1, pinned: 1, isOpen: false, stackable: true },
+      { appId: 'g1', name: 'Wizard101', compontent: 'Wizard101', icon: 'icon_wizard101', installed: 1, pinned: 0, isOpen: false, stackable: false }
+    ],
+    desktopShortcuts: [
+      { appId: 'a0', pos: { x: 10, y: 15 } },
+      { appId: 'b0', pos: { x: 90, y: 15 } },
+      { appId: 'b2', pos: { x: 170, y: 15 } },
+      { appId: 'b3', pos: { x: 250, y: 15 } },
+      { appId: 'b4', pos: { x: 10, y: 120 } },
+      { appId: 'a5', pos: { x: 90, y: 120 } },
+      { appId: 'g1', pos: { x: 170, y: 120 } },
     ],
     processes: [
     ],
     locked: true,
 
     // These apps are pinned to the taskbar
-    apps_taskbar: [
+    taskbarShortcuts: [
       'Firefox',
       'File Explorer',
       'Spotify',
@@ -34,7 +45,7 @@ export default new Vuex.Store({
     getAppsInTaskbar: state => {
       // Return all apps pinned to taskbar
       var _taskbar = []
-      for (const taskbarApp of state.apps_taskbar) {
+      for (const taskbarApp of state.taskbarShortcuts) {
         // Get app details
         for (const app of state.apps) {
           if (taskbarApp === app.name) {
@@ -61,6 +72,30 @@ export default new Vuex.Store({
     },
     getIsLocked: state => {
       return state.locked
+    },
+    getDesktopShortcuts: state => (app = null) => {
+      if (app == null) {
+        // Return all apps that have desktop shortcuts
+        var _shortcuts = []
+        for (const shortcut of state.desktopShortcuts) {
+          // Get app details
+          for (const app of state.apps) {
+            if (shortcut.appId === app.appId) {
+              _shortcuts.push(app)
+            }
+          }
+        }
+        return _shortcuts
+      } else {
+        // Single shortcut details (given an app)
+        // Get app shortcut details
+        for (const shortcut of state.desktopShortcuts) {
+          if (app.appId == shortcut.appId) {
+            return shortcut;
+          }
+        }
+      }
+
     }
   },
   mutations: {

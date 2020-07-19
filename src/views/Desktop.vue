@@ -1,5 +1,14 @@
 <template>
   <div class="desktop" :style="{ backgroundImage: desktopWallpaper }">
+    <div class="icons" ref="icons">
+      <DesktopIcon
+        v-for="(app, index) in $store.getters.getDesktopShortcuts()"
+        :key="index"
+        :app="app"
+        :shortcutDetails="$store.getters.getDesktopShortcuts(app)"
+        :icon="app.icon"
+      />
+    </div>
     <div ref="apps"></div>
     <Taskbar />
   </div>
@@ -9,6 +18,9 @@
 import Vue from 'vue';
 import { EventBus } from '@/util/event-bus.js';
 import Taskbar from '@/views/Taskbar.vue';
+
+// Desktop icons
+import DesktopIcon from '@/components/DesktopIcon.vue';
 
 // Apps
 import Email from '@/components/apps/AppEmail.vue';
@@ -21,12 +33,15 @@ export default {
   name: 'Desktop',
   components: {
     Taskbar,
+    DesktopIcon,
     Email,
     Spotify,
     Terminal
   },
   data() {
-    return {};
+    return {
+      wallpaper: '@/assets/wallpapers/naruto.jpg'
+    };
   },
   methods: {
     async launchApp(app) {
@@ -36,7 +51,7 @@ export default {
 
       // Check that a matching component was found
       if (_comp == undefined) {
-        console.log('component not found');
+        console.log('App not installed (' + app.name + ')');
         return;
       }
 
@@ -57,7 +72,7 @@ export default {
       this.$refs.apps.appendChild(instance.$el);
     },
     lockPC() {
-      console.log("locking")
+      console.log('locking');
       store.dispatch({
         type: 'lockPC'
       });
@@ -65,7 +80,7 @@ export default {
   },
   computed: {
     desktopWallpaper: function() {
-      return `url(${require('@/assets/wallpapers/windows-10.jpg')})`;
+      return `url(${require('@/assets/wallpapers/diamond.jpg')})`;
     }
   },
   mounted() {
@@ -90,5 +105,9 @@ export default {
   background-attachment: fixed;
   background-position: center;
   background-size: cover;
+
+  .icons {
+    position: absolute;
+  }
 }
 </style>
