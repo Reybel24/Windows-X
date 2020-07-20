@@ -5,7 +5,23 @@
     @click-maximize="maximizeApp"
     @click-minimize="minimizeApp"
   >
-    <div class="nav-sidebar"></div>
+    <div class="nav-sidebar">
+      <div
+        class="group"
+        v-for="(group, index) in pinnedDirs"
+        :key="index"
+      >
+        <div class="header" @click="openFolder(group.groupPath)">{{ getDirNameFromPath(group.groupPath) }}</div>
+        <div class="pins">
+          <div
+            class="pin"
+            v-for="(pin, index) in group.pins"
+            :key="index"
+            @click="openFolder(pin)"
+          >{{ getDirNameFromPath(pin) }}</div>
+        </div>
+      </div>
+    </div>
     <div class="main">
       <div class="address-bar">
         <div
@@ -51,7 +67,18 @@ export default {
   data() {
     return {
       drive_c: fileSystem.C,
-      activeDir: '~/Desktop' // Default open dir
+      rootPath: '~', // root
+      activeDir: '~', // Default open dir
+      pinnedDirs: [
+        {
+          groupPath: '~/Windows X/User/Libraries',
+          pins: [
+            '~/Windows X/User/Libraries/Documents',
+            '~/Windows X/User/Libraries/Pictures',
+            '~/Windows X/User/Libraries/Documents/notes/misc'
+          ]
+        }
+      ]
     };
   },
   methods: {
@@ -59,6 +86,7 @@ export default {
     // Will navigate to the given path and return a folder or file
     getStructByAbsPath(path) {
       // Example path: '~/Desktop/notes/shopping-list.txt
+      console.log(path);
 
       // First split the path into a list of folders
       var nodes = path.split('/');
@@ -113,13 +141,11 @@ export default {
           files.push(struct);
         }
       }
-      if (files.length > 0) {
-        return files;
-      } else {
-        return -1;
-      }
+      return files;
     },
     openFolder(path) {
+      if (path == '/~') this.activeDir = this.rootPath;
+
       var folder = this.getStructSimple(path);
       if (folder == -1) return;
 
@@ -146,11 +172,16 @@ export default {
         nodeIndex++;
       }
       return structs;
+    },
+    // Given a directory path, return its name (last node in path)
+    getDirNameFromPath(dir) {
+      var nodes = dir.split('/');
+      return nodes[nodes.length - 1];
     }
   },
   mounted() {
     // Set initial window position
-    this.setInitialPos(550, 250)
+    this.setInitialPos(550, 250);
   },
   computed: {
     getActiveDir: function() {
@@ -168,9 +199,39 @@ export default {
   user-select: none;
 
   .nav-sidebar {
-    background-color: rgb(90, 90, 90);
+    background-color: $dark-grey;
     width: 25%;
     height: 100%;
+    flex-direction: column;
+
+    .group {
+      flex-direction: column;
+
+      .header {
+        font-size: 1em;
+        cursor: pointer;
+        padding: 6px 0 6px 15px;
+
+        &:hover {
+          background-color: rgb(46, 46, 46);
+        }
+      }
+
+      .pins {
+        flex-direction: column;
+
+        .pin {
+          color: white;
+          font-size: 1em;
+          cursor: pointer;
+          padding: 7px 5px 7px 37px;
+
+          &:hover {
+            background-color: rgb(46, 46, 46);
+          }
+        }
+      }
+    }
   }
 
   .main {
