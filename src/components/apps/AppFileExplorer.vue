@@ -9,17 +9,15 @@
   >
     <div class="nav-sidebar">
       <div class="group" v-for="(group, index) in pinnedDirs" :key="index">
-        <div
-          class="header"
-          @click="openFolder(group.groupPath)"
-        >{{ getDirNameFromPath(group.groupPath) }}</div>
+        <div class="header" @click="openFolder(group.groupPath)">
+          <img src="@/assets/icons/icon_file-explorer.png" />
+          {{ getDirNameFromPath(group.groupPath) }}
+        </div>
         <div class="pins">
-          <div
-            class="pin"
-            v-for="(pin, index) in group.pins"
-            :key="index"
-            @click="openFolder(pin)"
-          >{{ getDirNameFromPath(pin) }}</div>
+          <div class="pin" v-for="(pin, index) in group.pins" :key="index" @click="openFolder(pin)">
+            <i class="fas fa-folder icon"></i>
+            {{ getDirNameFromPath(pin) }}
+          </div>
         </div>
       </div>
     </div>
@@ -36,7 +34,7 @@
             <i class="fas fa-arrow-up icon"></i>
           </div>
         </div>
-        <div class="address-bar">
+        <div class="address-bar" ref="addressBar">
           <div
             class="node"
             v-for="(node, index) in this.nodesFromActiveDir()"
@@ -89,6 +87,7 @@ export default {
       pinnedDirs: [
         {
           groupPath: '~/Windows X/User/Libraries',
+          icon: 'fas fa-folder',
           pins: [
             '~/Windows X/User/Libraries/Documents',
             '~/Windows X/User/Libraries/Pictures',
@@ -179,12 +178,12 @@ export default {
       if (folder == -1) return;
 
       this.activeDir = path;
+      this.scrollAddressBar();
     },
     // Given a full path, splits it up and return each node as its own path. Useful for navigating from address bar
     nodesFromActiveDir() {
       // Return individual dirs from full path
       var nodes = this.activeDir.split('/');
-      // return nodes;
 
       var structs = [];
       var nodeIndex = 0;
@@ -222,12 +221,10 @@ export default {
       // console.log(this.breadcrumb);
       // console.log(this.breadcrumbIndex);
       if (dir == this.dir.FORWARD) {
-        console.log('next');
         this.breadcrumbIndex++;
         this.activeDir = this.breadcrumb[this.breadcrumbIndex];
       } else if (dir == this.dir.BACK) {
-        console.log('prev');
-        if (this.breadcrumb.length >= 1) {
+        if (this.breadcrumbIndex >= 1) {
           this.breadcrumbIndex--;
           this.activeDir = this.breadcrumb[this.breadcrumbIndex];
         }
@@ -236,11 +233,21 @@ export default {
     addPathToBreadcrumb(path) {
       this.breadcrumb.push(path);
       this.breadcrumbIndex = this.breadcrumb.length - 1;
+    },
+    scrollAddressBar() {
+      let _this = this;
+      setTimeout(function() {
+        var addressBar = _this.$refs.addressBar;
+        addressBar.scrollLeft = addressBar.offsetWidth;
+      }, 100);
     }
   },
   mounted() {
     // Set initial window position
     this.setInitialPos(550, 250);
+
+    // Add initial position to breadcrumb trail
+    this.addPathToBreadcrumb(this.activeDir);
   },
   computed: {
     getActiveDir: function() {
@@ -269,6 +276,7 @@ export default {
     width: 25%;
     height: 100%;
     flex-direction: column;
+    padding-top: 15px;
 
     .group {
       flex-direction: column;
@@ -276,10 +284,20 @@ export default {
       .header {
         font-size: 1em;
         cursor: pointer;
-        padding: 6px 0 6px 15px;
+        padding: 6px 0 6px 20px;
+        align-items: center;
+
+        img {
+          width: 18px;
+          padding-right: 6px;
+        }
 
         &:hover {
           background-color: rgb(46, 46, 46);
+        }
+
+        &:hover:active {
+          background-color: rgb(41, 41, 41);
         }
       }
 
@@ -290,10 +308,19 @@ export default {
           color: white;
           font-size: 1em;
           cursor: pointer;
-          padding: 7px 5px 7px 37px;
+          padding: 7px 5px 7px 45px;
+          align-items: center;
 
           &:hover {
             background-color: rgb(46, 46, 46);
+          }
+
+          &:hover:active {
+            background-color: rgb(41, 41, 41);
+          }
+
+          .icon {
+            padding-right: 7px;
           }
         }
       }
@@ -308,7 +335,7 @@ export default {
     .top {
       width: 100%;
       height: 40px;
-      background-color: rgb(52, 52, 52);;
+      background-color: rgb(52, 52, 52);
       align-items: center;
       padding: 6px 10px 6px 10px;
 
@@ -328,7 +355,7 @@ export default {
 
           &:hover:active {
             // background-color: rgb(71, 71, 71);
-            @include anim-press(0.9);
+            @include anim-scale(0.9);
           }
         }
 
@@ -345,6 +372,10 @@ export default {
         flex-direction: row;
         align-items: center;
         border-radius: 4px;
+        overflow-x: scroll;
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+        transition: 0.3s;
 
         .node {
           color: rgb(224, 224, 224);
@@ -355,6 +386,7 @@ export default {
 
           .name {
             align-items: center;
+            white-space: nowrap;
           }
           .icon {
             font-size: 0.6em;
@@ -368,7 +400,7 @@ export default {
 
           &:hover:active {
             background-color: rgb(85, 85, 85);
-            @include anim-press(0.96);
+            @include anim-scale(0.96);
           }
         }
       }

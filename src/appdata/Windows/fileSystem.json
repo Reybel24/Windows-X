@@ -58,6 +58,11 @@
             "path": "~/Windows X/User/Libraries/Documents/notes"
         },
         {
+            "type": "folder",
+            "name": "private",
+            "path": "~/Windows X/User/Libraries/Documents/notes/misc"
+        },
+        {
             "type": "file",
             "name": "poems",
             "ext": "txt",

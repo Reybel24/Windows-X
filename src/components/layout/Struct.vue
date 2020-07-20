@@ -1,5 +1,11 @@
 <template>
-  <div class="struct" @click="onClick">
+  <div
+    class="struct"
+    @click="onClick"
+    @mousedown="select"
+    :class="{ selected : this.isSelected }"
+    v-on-clickaway="away"
+  >
     <img :src="this.iconSrc" />
     <div class="name">{{ struct.name }}</div>
   </div>
@@ -7,13 +13,14 @@
 
 <script>
 import { EventBus } from '@/util/event-bus.js';
+import { mixin as clickaway } from 'vue-clickaway';
 
 // Drag n drop
 // import Draggable from '@/util/Draggable';
 
 export default {
   name: 'Struct',
-  // mixins: [Draggable],
+  mixins: [clickaway],
   components: {},
   props: {
     struct: {
@@ -24,13 +31,8 @@ export default {
   },
   data() {
     return {
-      positions: {
-        clientX: undefined,
-        clientY: undefined,
-        movementX: 0,
-        movementY: 0
-      },
-      clicks: 0
+      clicks: 0,
+      isSelected: false
     };
   },
   methods: {
@@ -59,6 +61,12 @@ export default {
           EventBus.$emit('OPEN_FILE', this.struct);
         }
       }
+    },
+    select() {
+      this.isSelected = true;
+    },
+    away() {
+      this.isSelected = false;
     }
   },
   computed: {
@@ -95,13 +103,20 @@ export default {
   border-radius: 5px;
   flex-direction: column;
   overflow: hidden;
+  margin: 5px;
 
   &:hover {
     background-color: rgb(229, 243, 255);
   }
 
   &:hover:active {
-    background-color: rgb(190, 225, 255);
+    // background-color: rgb(190, 225, 255);
+    @include anim-scale(.98)
+  }
+
+  &.selected {
+    // background-color: rgb(204, 232, 255);
+    // border: 1px solid rgb (153, 209, 255);
   }
 
   .name {
