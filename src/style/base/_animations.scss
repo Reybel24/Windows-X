@@ -2,6 +2,3 @@
 @mixin anim-scale($travel) {
     transform: scale($travel, $travel);
 }
-@mixin anim-shrink($travel) {
-    transform: scale($travel, $travel);
-}
