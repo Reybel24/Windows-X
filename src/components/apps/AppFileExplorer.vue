@@ -83,7 +83,7 @@ export default {
     return {
       drive_c: fileSystem.C,
       rootPath: '~', // root
-      activeDir: '~', // Default open dir
+      activeDir: '~/Windows X/User/Libraries', // Default open dir
       pinnedDirs: [
         {
           groupPath: '~/Windows X/User/Libraries',
