@@ -12,7 +12,6 @@ export default {
   methods: {
     async launchApp(app, payload = null) {
       // Create instance
-      // console.log(app.name)
       var _comp = this.$options.__proto__.components[app.component];
 
       // Check that a matching component was found
@@ -36,6 +35,8 @@ export default {
       });
       instance.$mount(); // pass nothing
       this.$refs.apps.appendChild(instance.$el);
+
+      this.addAppToTaskbar();
     },
     lockPC() {
       store.dispatch({
@@ -44,14 +45,24 @@ export default {
     },
     openFile(file) {
       // Open app depending on type
-      switch (file.ext) {
-        case 'txt':
-          var app = this.$store.getters.getAppByName('Notepad');
-          EventBus.$emit('OPEN_APP', app, { file: file });
-          break;
-        default:
-          console.log('unsupported file type: ' + file.ext);
+      var app = this.getAppForFileExt(file.ext);
+      if (app != null) {
+        EventBus.$emit('OPEN_APP', app, { file: file });
+      } else {
+        console.log('unsupported file type: ' + file.ext);
       }
+    },
+    addAppToTaskbar() {
+      // console.log('adding to taskbar');
+    },
+    getRunningProcessById(procId) {
+      // Search through refs.apps for an id
+      // Wincore should have a 'getProcId' method
+      // Returns matched procId winapp component instance
+    },
+    countRunningProcesses(appId = null) {
+      // If no appId given, return number of all running processes
+      // If appId given, return number of all processes of that app running
     }
   },
   computed: {},

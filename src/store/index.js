@@ -6,18 +6,7 @@ import { randomNumberBetween } from "@/util/common.js";
 
 export default new Vuex.Store({
   state: {
-    apps: [
-      { appId: 'a0', name: 'Recycle Bin', component: 'Recycle', icon: 'icon_recycle-bin', installed: 1, pinned: 0, isOpen: false, stackable: true },
-      { appId: 'b0', name: 'Firefox', component: 'FireFox', icon: 'icon_firefox', installed: 1, pinned: 1, isOpen: true, stackable: true },
-      { appId: 'a1', name: 'File Explorer', component: 'FileExplorer', icon: 'icon_file-explorer', installed: 1, pinned: 1, isOpen: false, stackable: true },
-      { appId: 'b2', name: 'Spotify', component: 'Spotify', icon: 'icon_spotify', installed: 1, pinned: 1, isOpen: true, stackable: false },
-      { appId: 'b3', name: 'Steam', component: 'Steam', icon: 'icon_steam', installed: 1, pinned: 1, isOpen: false, stackable: false },
-      { appId: 'b4', name: 'Microsoft Word', component: 'MicrosoftWord', icon: 'icon_word', installed: 1, pinned: 1, isOpen: false, stackable: true },
-      { appId: 'a5', name: 'Email', component: 'Outlook', icon: 'icon_outlook', installed: 1, pinned: 1, isOpen: false, stackable: false },
-      { appId: 'a6', name: 'Terminal', component: 'Terminal', icon: 'icon_terminal', installed: 1, pinned: 1, isOpen: false, stackable: true },
-      { appId: 'g1', name: 'Wizard101', component: 'Wizard101', icon: 'icon_wizard101', installed: 1, pinned: 0, isOpen: false, stackable: false },
-      { appId: 'a7', name: 'Notepad', component: 'Notepad', icon: 'icon_notepad', installed: 1, pinned: 0, isOpen: false, stackable: true }
-    ],
+    apps: [],
     desktopShortcuts: [
       { appId: 'a0', pos: { x: 10, y: 15 } },
       { appId: 'b0', pos: { x: 90, y: 15 } },
@@ -28,9 +17,17 @@ export default new Vuex.Store({
       { appId: 'g1', pos: { x: 170, y: 120 } },
       { appId: 'a7', pos: { x: 250, y: 120 } },
     ],
+    taskbarShortcuts: [
+      { appId: 'b0', pos: 0 },
+      { appId: 'b2', pos: 0 },
+      { appId: 'b3', pos: 0 },
+      { appId: 'a5', pos: 0 },
+      { appId: 'b4', pos: 0 },
+      { appId: 'a6', pos: 0 },
+    ],
     processes: [
     ],
-    locked: true,
+    locked: false,
 
     // These apps are pinned to the taskbar
     taskbarShortcuts: [
@@ -105,7 +102,7 @@ export default new Vuex.Store({
           return app
         }
       }
-      return -1
+      return null
     }
   },
   mutations: {
@@ -123,6 +120,9 @@ export default new Vuex.Store({
         }
       }
       return -1;
+    },
+    addToApps(state, appMeta) {
+      state.apps.push(appMeta)
     }
   },
   actions: {
@@ -152,6 +152,12 @@ export default new Vuex.Store({
     lockPC({ commit, state }, payload) {
       return new Promise((resolve, reject) => {
         state.locked = true
+        resolve(0)
+      });
+    },
+    hookApp({ commit, state }, payload) {
+      return new Promise((resolve, reject) => {
+        commit('addToApps', payload.appMeta)
         resolve(0)
       });
     }
