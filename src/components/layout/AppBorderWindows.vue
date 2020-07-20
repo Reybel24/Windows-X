@@ -100,6 +100,7 @@ export default {
     font-size: .9em;
     padding: 0 0 0 8px;
     margin-top: -2px;
+    color: $dark-grey;
 
     .icon {
       color: rgb(124, 124, 124);
