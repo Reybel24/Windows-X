@@ -2,6 +2,11 @@
     "C": [
         {
             "type": "folder",
+            "name": "~",
+            "path": ""
+        },
+        {
+            "type": "folder",
             "name": "Windows X",
             "path": "~"
         },

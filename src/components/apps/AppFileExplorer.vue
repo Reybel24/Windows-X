@@ -4,14 +4,15 @@
     @close="onClose"
     @click-maximize="maximizeApp"
     @click-minimize="minimizeApp"
+    :title="'Explorer'"
+    :theme="'dark'"
   >
     <div class="nav-sidebar">
-      <div
-        class="group"
-        v-for="(group, index) in pinnedDirs"
-        :key="index"
-      >
-        <div class="header" @click="openFolder(group.groupPath)">{{ getDirNameFromPath(group.groupPath) }}</div>
+      <div class="group" v-for="(group, index) in pinnedDirs" :key="index">
+        <div
+          class="header"
+          @click="openFolder(group.groupPath)"
+        >{{ getDirNameFromPath(group.groupPath) }}</div>
         <div class="pins">
           <div
             class="pin"
@@ -23,15 +24,28 @@
       </div>
     </div>
     <div class="main">
-      <div class="address-bar">
-        <div
-          class="node"
-          v-for="(node, index) in this.nodesFromActiveDir()"
-          :key="index"
-          @click="openFolder(node.path + '/'  + node.name)"
-        >
-          <div class="name">{{ node.name }}</div>
-          <i class="fas fa-chevron-right" :class="'icon'"></i>
+      <div class="top">
+        <div class="nav">
+          <div class="prev" @click="navigateBreadcrumb(dir.BACK)">
+            <i class="fas fa-arrow-left icon"></i>
+          </div>
+          <div class="forward" @click="navigateBreadcrumb(dir.FORWARD)">
+            <i class="fas fa-arrow-right icon"></i>
+          </div>
+          <div class="up" @click="goUp" :style="{ opacity: (atRoot) ? .5 : 1}">
+            <i class="fas fa-arrow-up icon"></i>
+          </div>
+        </div>
+        <div class="address-bar">
+          <div
+            class="node"
+            v-for="(node, index) in this.nodesFromActiveDir()"
+            :key="index"
+            @click="openFolder((node.path != '') ? node.path + '/'  + node.name : node.name)"
+          >
+            <div class="name">{{ node.name }}</div>
+            <i class="fas fa-chevron-right" :class="'icon'"></i>
+          </div>
         </div>
       </div>
       <div class="files-view">
@@ -41,6 +55,9 @@
           :struct="struct"
           @nav-to="openFolder"
         />
+        <div class="empty" v-if="dirIsEmpty">
+          <i class="fas fa-ghost icon"></i>These are not the files you're looking for
+        </div>
       </div>
     </div>
   </WinApp>
@@ -78,7 +95,13 @@ export default {
             '~/Windows X/User/Libraries/Documents/notes/misc'
           ]
         }
-      ]
+      ],
+      dir: {
+        FORWARD: 'next',
+        BACK: 'prev'
+      },
+      breadcrumb: [],
+      breadcrumbIndex: 0
     };
   },
   methods: {
@@ -144,6 +167,12 @@ export default {
       return files;
     },
     openFolder(path) {
+      // Check if user navigated to same directory
+      if (path != this.activeDir) {
+        // Add to breadcrumb
+        this.addPathToBreadcrumb(path);
+      }
+
       if (path == '/~') this.activeDir = this.rootPath;
 
       var folder = this.getStructSimple(path);
@@ -177,6 +206,36 @@ export default {
     getDirNameFromPath(dir) {
       var nodes = dir.split('/');
       return nodes[nodes.length - 1];
+    },
+    goUp(levels) {
+      // Navigates x levels "up" from current directory
+      var levels = this.nodesFromActiveDir();
+      var up = levels[levels.length - 1];
+
+      if (up.path != '') {
+        this.activeDir = up.path;
+      }
+    },
+    navigateBreadcrumb(dir) {
+      // Kind of broken because navigating backwards through breadcrumb will not add
+      // that path to the end. So it will take you to incorrect previous location (last folder opened not through breadcrumb)
+      // console.log(this.breadcrumb);
+      // console.log(this.breadcrumbIndex);
+      if (dir == this.dir.FORWARD) {
+        console.log('next');
+        this.breadcrumbIndex++;
+        this.activeDir = this.breadcrumb[this.breadcrumbIndex];
+      } else if (dir == this.dir.BACK) {
+        console.log('prev');
+        if (this.breadcrumb.length >= 1) {
+          this.breadcrumbIndex--;
+          this.activeDir = this.breadcrumb[this.breadcrumbIndex];
+        }
+      }
+    },
+    addPathToBreadcrumb(path) {
+      this.breadcrumb.push(path);
+      this.breadcrumbIndex = this.breadcrumb.length - 1;
     }
   },
   mounted() {
@@ -186,6 +245,13 @@ export default {
   computed: {
     getActiveDir: function() {
       return this.getStructSimple(this.activeDir);
+    },
+    dirIsEmpty: function() {
+      return this.getStructSimple(this.activeDir).length < 1 ? true : false;
+    },
+    atRoot: function() {
+      // Checks if current directory is root
+      return this.activeDir == this.rootPath;
     }
   }
 };
@@ -239,35 +305,71 @@ export default {
     width: 100%;
     flex-direction: column;
 
-    .address-bar {
+    .top {
       width: 100%;
-      background-color: white;
-      border: 1px solid rgb(179, 179, 179);
-      flex-direction: row;
+      height: 40px;
+      background-color: rgb(52, 52, 52);;
       align-items: center;
+      padding: 6px 10px 6px 10px;
 
-      .node {
-        color: grey;
-        font-size: 1em;
-        padding: 5px 8px 5px 8px;
+      .nav {
+        padding: 0 20px 0 0;
+        color: white;
         transition: 0.2s;
-        align-items: center;
+        font-size: 0.9em;
 
-        .name {
-          align-items: center;
+        div {
+          padding: 6px 6px 6px 6px;
+
+          &:hover {
+            background-color: rgb(85, 85, 85);
+            border-radius: 20px;
+          }
+
+          &:hover:active {
+            // background-color: rgb(71, 71, 71);
+            @include anim-press(0.9);
+          }
         }
+
         .icon {
-          font-size: 0.6em;
-          padding-left: 8px;
-          padding-top: 3px;
+          padding: 1px 4px 1px 4px;
         }
+      }
 
-        &:hover {
-          background-color: rgb(229, 243, 255);
-        }
+      .address-bar {
+        width: 60%;
+        height: 70%;
+        background-color: rgb(78, 78, 78);
+        // border: 1px solid rgb(179, 179, 179);
+        flex-direction: row;
+        align-items: center;
+        border-radius: 4px;
 
-        &:hover:active {
-          background-color: rgb(197, 228, 255);
+        .node {
+          color: rgb(224, 224, 224);
+          font-size: 0.9em;
+          padding: 5px 8px 5px 8px;
+          transition: 0.2s;
+          align-items: center;
+
+          .name {
+            align-items: center;
+          }
+          .icon {
+            font-size: 0.6em;
+            padding-left: 8px;
+            padding-top: 3px;
+          }
+
+          &:hover {
+            background-color: rgb(104, 104, 104);
+          }
+
+          &:hover:active {
+            background-color: rgb(85, 85, 85);
+            @include anim-press(0.96);
+          }
         }
       }
     }
@@ -275,6 +377,24 @@ export default {
     .files-view {
       padding: 10px 0 7px 15px;
       flex-direction: row;
+      flex-grow: 1;
+
+      .empty {
+        flex-grow: 1;
+        color: $light-grey;
+        justify-content: center;
+        align-items: center;
+        font-size: 1em;
+        flex-direction: column;
+        font-weight: $font-bold;
+
+        .icon {
+          font-size: 4em;
+          color: $light-grey;
+          margin-bottom: 20px;
+          margin-top: -70px;
+        }
+      }
     }
   }
 }

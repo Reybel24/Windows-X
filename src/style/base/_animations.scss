@@ -1,0 +1,4 @@
+// Animations
+@mixin anim-press($travel) {
+    transform: scale($travel, $travel);
+}
