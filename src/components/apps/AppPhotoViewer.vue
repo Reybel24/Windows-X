@@ -4,6 +4,7 @@
     @close="onClose"
     @click-maximize="maximizeApp"
     @click-minimize="minimizeApp"
+    :title="fullImgName"
   >
     <div class="wrapper">
       <div class="action-bar">
@@ -70,6 +71,9 @@ export default {
           console.log(error);
         }
       }
+    },
+    fullImgName: function() {
+      return this.payload.file.name + '.' + this.payload.file.ext
     }
   }
 };

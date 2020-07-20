@@ -1,5 +1,6 @@
 <template>
   <div class="border" @mousedown="dragWindow">
+    <div class="title" v-if="this.title != null">{{ this.title }}</div>
     <div class="actions-group">
       <div class="action minimize" @click="$emit('click-minimize')"><i class="fas fa-minus" :class="'icon'"></i></div>
       <div class="action maximize" @click="$emit('click-maximize')"><i class="fas fa-square" :class="'icon'"></i></div>
@@ -96,7 +97,9 @@ export default {
   }
 
   .title {
-    font-size: 16px;
+    font-size: .9em;
+    padding: 0 0 0 8px;
+    margin-top: -2px;
 
     .icon {
       color: rgb(124, 124, 124);
