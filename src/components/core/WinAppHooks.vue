@@ -6,6 +6,7 @@ import FileExplorer from '@/components/apps/AppFileExplorer.vue';
 import Terminal from '@/components/apps/AppTerminal.vue';
 import Notepad from '@/components/apps/AppNotepad.vue';
 import PhotoViewer from '@/components/apps/AppPhotoViewer.vue';
+import Firefox from '@/components/apps/AppFirefox.vue';
 
 // Need access to store
 import store from '@/store';
@@ -17,7 +18,8 @@ export default {
     Terminal,
     FileExplorer,
     Notepad,
-    PhotoViewer
+    PhotoViewer,
+    Firefox
   },
   methods: {
     getAppForFileExt(ext) {
@@ -55,11 +57,11 @@ export default {
       {
         appId: 'b0',
         name: 'Firefox',
-        component: 'FireFox',
+        component: 'Firefox',
         icon: 'icon_firefox',
         installed: 1,
         pinned: 1,
-        isOpen: true,
+        isOpen: false,
         stackable: true
       },
       {

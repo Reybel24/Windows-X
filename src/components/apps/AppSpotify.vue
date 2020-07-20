@@ -4,6 +4,8 @@
     @close="onClose"
     @click-maximize="maximizeApp"
     @click-minimize="minimizeApp"
+    :title="'Spotify'"
+    :theme="'dark'"
   >
     <div class="wrapper">
       <div class="main">
@@ -158,7 +160,10 @@ export default {
       this.playSong(_randSong)
     }
   },
-  mounted() {},
+  mounted() {
+    // Set initial window position
+    this.setInitialPos(400, 140);
+  },
   computed: {
     songIsPlaying: function() {
       return this.isPlaying;

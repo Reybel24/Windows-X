@@ -4,34 +4,46 @@
     @close="onClose"
     @click-maximize="maximizeApp"
     @click-minimize="minimizeApp"
+    :title="'Explorer'"
+    :theme="'dark'"
   >
     <div class="nav-sidebar">
-      <div
-        class="group"
-        v-for="(group, index) in pinnedDirs"
-        :key="index"
-      >
-        <div class="header" @click="openFolder(group.groupPath)">{{ getDirNameFromPath(group.groupPath) }}</div>
+      <div class="group" v-for="(group, index) in pinnedDirs" :key="index">
+        <div class="header" @click="openFolder(group.groupPath)">
+          <img src="@/assets/icons/icon_file-explorer.png" />
+          {{ getDirNameFromPath(group.groupPath) }}
+        </div>
         <div class="pins">
-          <div
-            class="pin"
-            v-for="(pin, index) in group.pins"
-            :key="index"
-            @click="openFolder(pin)"
-          >{{ getDirNameFromPath(pin) }}</div>
+          <div class="pin" v-for="(pin, index) in group.pins" :key="index" @click="openFolder(pin)">
+            <i class="fas fa-folder icon"></i>
+            {{ getDirNameFromPath(pin) }}
+          </div>
         </div>
       </div>
     </div>
     <div class="main">
-      <div class="address-bar">
-        <div
-          class="node"
-          v-for="(node, index) in this.nodesFromActiveDir()"
-          :key="index"
-          @click="openFolder(node.path + '/'  + node.name)"
-        >
-          <div class="name">{{ node.name }}</div>
-          <i class="fas fa-chevron-right" :class="'icon'"></i>
+      <div class="top">
+        <div class="nav">
+          <div class="prev" @click="navigateBreadcrumb(dir.BACK)">
+            <i class="fas fa-arrow-left icon"></i>
+          </div>
+          <div class="forward" @click="navigateBreadcrumb(dir.FORWARD)">
+            <i class="fas fa-arrow-right icon"></i>
+          </div>
+          <div class="up" @click="goUp" :style="{ opacity: (atRoot) ? .5 : 1}">
+            <i class="fas fa-arrow-up icon"></i>
+          </div>
+        </div>
+        <div class="address-bar" ref="addressBar">
+          <div
+            class="node"
+            v-for="(node, index) in this.nodesFromActiveDir()"
+            :key="index"
+            @click="openFolder((node.path != '') ? node.path + '/'  + node.name : node.name)"
+          >
+            <div class="name">{{ node.name }}</div>
+            <i class="fas fa-chevron-right" :class="'icon'"></i>
+          </div>
         </div>
       </div>
       <div class="files-view">
@@ -41,6 +53,9 @@
           :struct="struct"
           @nav-to="openFolder"
         />
+        <div class="empty" v-if="dirIsEmpty">
+          <i class="fas fa-ghost icon"></i>These are not the files you're looking for
+        </div>
       </div>
     </div>
   </WinApp>
@@ -68,17 +83,24 @@ export default {
     return {
       drive_c: fileSystem.C,
       rootPath: '~', // root
-      activeDir: '~', // Default open dir
+      activeDir: '~/Windows X/User/Libraries', // Default open dir
       pinnedDirs: [
         {
           groupPath: '~/Windows X/User/Libraries',
+          icon: 'fas fa-folder',
           pins: [
             '~/Windows X/User/Libraries/Documents',
             '~/Windows X/User/Libraries/Pictures',
             '~/Windows X/User/Libraries/Documents/notes/misc'
           ]
         }
-      ]
+      ],
+      dir: {
+        FORWARD: 'next',
+        BACK: 'prev'
+      },
+      breadcrumb: [],
+      breadcrumbIndex: 0
     };
   },
   methods: {
@@ -144,18 +166,24 @@ export default {
       return files;
     },
     openFolder(path) {
+      // Check if user navigated to same directory
+      if (path != this.activeDir) {
+        // Add to breadcrumb
+        this.addPathToBreadcrumb(path);
+      }
+
       if (path == '/~') this.activeDir = this.rootPath;
 
       var folder = this.getStructSimple(path);
       if (folder == -1) return;
 
       this.activeDir = path;
+      this.scrollAddressBar();
     },
     // Given a full path, splits it up and return each node as its own path. Useful for navigating from address bar
     nodesFromActiveDir() {
       // Return individual dirs from full path
       var nodes = this.activeDir.split('/');
-      // return nodes;
 
       var structs = [];
       var nodeIndex = 0;
@@ -177,15 +205,60 @@ export default {
     getDirNameFromPath(dir) {
       var nodes = dir.split('/');
       return nodes[nodes.length - 1];
+    },
+    goUp(levels) {
+      // Navigates x levels "up" from current directory
+      var levels = this.nodesFromActiveDir();
+      var up = levels[levels.length - 1];
+
+      if (up.path != '') {
+        this.activeDir = up.path;
+      }
+    },
+    navigateBreadcrumb(dir) {
+      // Kind of broken because navigating backwards through breadcrumb will not add
+      // that path to the end. So it will take you to incorrect previous location (last folder opened not through breadcrumb)
+      // console.log(this.breadcrumb);
+      // console.log(this.breadcrumbIndex);
+      if (dir == this.dir.FORWARD) {
+        this.breadcrumbIndex++;
+        this.activeDir = this.breadcrumb[this.breadcrumbIndex];
+      } else if (dir == this.dir.BACK) {
+        if (this.breadcrumbIndex >= 1) {
+          this.breadcrumbIndex--;
+          this.activeDir = this.breadcrumb[this.breadcrumbIndex];
+        }
+      }
+    },
+    addPathToBreadcrumb(path) {
+      this.breadcrumb.push(path);
+      this.breadcrumbIndex = this.breadcrumb.length - 1;
+    },
+    scrollAddressBar() {
+      let _this = this;
+      setTimeout(function() {
+        var addressBar = _this.$refs.addressBar;
+        addressBar.scrollLeft = addressBar.offsetWidth;
+      }, 100);
     }
   },
   mounted() {
     // Set initial window position
     this.setInitialPos(550, 250);
+
+    // Add initial position to breadcrumb trail
+    this.addPathToBreadcrumb(this.activeDir);
   },
   computed: {
     getActiveDir: function() {
       return this.getStructSimple(this.activeDir);
+    },
+    dirIsEmpty: function() {
+      return this.getStructSimple(this.activeDir).length < 1 ? true : false;
+    },
+    atRoot: function() {
+      // Checks if current directory is root
+      return this.activeDir == this.rootPath;
     }
   }
 };
@@ -203,6 +276,7 @@ export default {
     width: 25%;
     height: 100%;
     flex-direction: column;
+    padding-top: 15px;
 
     .group {
       flex-direction: column;
@@ -210,10 +284,20 @@ export default {
       .header {
         font-size: 1em;
         cursor: pointer;
-        padding: 6px 0 6px 15px;
+        padding: 6px 0 6px 20px;
+        align-items: center;
+
+        img {
+          width: 18px;
+          padding-right: 6px;
+        }
 
         &:hover {
           background-color: rgb(46, 46, 46);
+        }
+
+        &:hover:active {
+          background-color: rgb(41, 41, 41);
         }
       }
 
@@ -224,10 +308,19 @@ export default {
           color: white;
           font-size: 1em;
           cursor: pointer;
-          padding: 7px 5px 7px 37px;
+          padding: 7px 5px 7px 45px;
+          align-items: center;
 
           &:hover {
             background-color: rgb(46, 46, 46);
+          }
+
+          &:hover:active {
+            background-color: rgb(41, 41, 41);
+          }
+
+          .icon {
+            padding-right: 7px;
           }
         }
       }
@@ -239,35 +332,80 @@ export default {
     width: 100%;
     flex-direction: column;
 
-    .address-bar {
+    .top {
       width: 100%;
-      background-color: white;
-      border: 1px solid rgb(179, 179, 179);
-      flex-direction: row;
+      height: 40px;
+      background-color: rgb(52, 52, 52);
       align-items: center;
+      padding: 6px 10px 6px 10px;
 
-      .node {
-        color: grey;
-        font-size: 1em;
-        padding: 5px 8px 5px 8px;
+      .nav {
+        padding: 0 20px 0 0;
+        color: white;
         transition: 0.2s;
-        align-items: center;
+        font-size: 0.9em;
 
-        .name {
-          align-items: center;
+        div {
+          padding: 6px 6px 6px 6px;
+
+          &:hover {
+            background-color: rgb(85, 85, 85);
+            border-radius: 20px;
+          }
+
+          &:hover:active {
+            // background-color: rgb(71, 71, 71);
+            @include anim-scale(0.9);
+          }
         }
+
         .icon {
-          font-size: 0.6em;
-          padding-left: 8px;
-          padding-top: 3px;
+          padding: 1px 4px 1px 4px;
+        }
+      }
+
+      .address-bar {
+        width: 60%;
+        height: 70%;
+        background-color: rgb(78, 78, 78);
+        // border: 1px solid rgb(179, 179, 179);
+        flex-direction: row;
+        align-items: center;
+        border-radius: 4px;
+        overflow-x: scroll;
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+        transition: 0.3s;
+
+        &::-webkit-scrollbar {
+          display: none;
         }
 
-        &:hover {
-          background-color: rgb(229, 243, 255);
-        }
+        .node {
+          color: rgb(224, 224, 224);
+          font-size: 0.9em;
+          padding: 5px 8px 5px 8px;
+          transition: 0.2s;
+          align-items: center;
 
-        &:hover:active {
-          background-color: rgb(197, 228, 255);
+          .name {
+            align-items: center;
+            white-space: nowrap;
+          }
+          .icon {
+            font-size: 0.6em;
+            padding-left: 8px;
+            padding-top: 3px;
+          }
+
+          &:hover {
+            background-color: rgb(104, 104, 104);
+          }
+
+          &:hover:active {
+            background-color: rgb(85, 85, 85);
+            @include anim-scale(0.96);
+          }
         }
       }
     }
@@ -275,6 +413,24 @@ export default {
     .files-view {
       padding: 10px 0 7px 15px;
       flex-direction: row;
+      flex-grow: 1;
+
+      .empty {
+        flex-grow: 1;
+        color: $light-grey;
+        justify-content: center;
+        align-items: center;
+        font-size: 1em;
+        flex-direction: column;
+        font-weight: $font-bold;
+
+        .icon {
+          font-size: 4em;
+          color: $light-grey;
+          margin-bottom: 20px;
+          margin-top: -70px;
+        }
+      }
     }
   }
 }

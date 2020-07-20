@@ -1,10 +1,20 @@
 <template>
-  <div class="border" @mousedown="dragWindow">
-    <div class="title" v-if="this.title != null">{{ this.title }}</div>
+  <div class="border" @mousedown="dragWindow" :class="themeStyle">
+    <div
+      class="title"
+      v-if="this.title != null"
+      :style="{ color: (theme == 'dark') ? 'rgb(197, 197, 197)' : 'rgb(54, 54, 54)' }"
+    >{{ this.title }}</div>
     <div class="actions-group">
-      <div class="action minimize" @click="$emit('click-minimize')"><i class="fas fa-minus" :class="'icon'"></i></div>
-      <div class="action maximize" @click="$emit('click-maximize')"><i class="fas fa-square" :class="'icon'"></i></div>
-      <div class="action exit" @click="$emit('click-close')"><i class="fas fa-times" :class="'icon'"></i></div>
+      <div class="action minimize" @click="$emit('click-minimize')">
+        <i class="fas fa-minus" :class="'icon'"></i>
+      </div>
+      <div class="action maximize" @click="$emit('click-maximize')">
+        <i class="fas fa-square" :class="'icon'"></i>
+      </div>
+      <div class="action exit" @click="$emit('click-close')">
+        <i class="fas fa-times" :class="'icon'"></i>
+      </div>
     </div>
   </div>
 </template>
@@ -17,19 +27,33 @@ export default {
       type: String,
       default: 'Unnamed',
       required: false
+    },
+    theme: {
+      type: String,
+      default: 'light',
+      required: false
     }
   },
-  data () {
+  data() {
     return {
       isPressing: false
-    }
+    };
   },
   methods: {
-    dragWindow ($event) {
-      this.$emit('drag-window', $event)
+    dragWindow($event) {
+      this.$emit('drag-window', $event);
+    }
+  },
+  computed: {
+    themeStyle: function() {
+      if (this.theme == 'dark') {
+        return 'theme-dark';
+      } else {
+        return 'theme-light';
+      }
     }
   }
-}
+};
 </script>
 
 <style scoped lang="scss">
@@ -58,7 +82,7 @@ export default {
       justify-content: center;
       cursor: pointer;
       color: #797979;
-      transition: .1s;
+      transition: 0.1s;
       flex-grow: 1;
 
       &:hover {
@@ -97,7 +121,7 @@ export default {
   }
 
   .title {
-    font-size: .9em;
+    font-size: 0.9em;
     padding: 0 0 0 8px;
     margin-top: -2px;
     color: $dark-grey;
@@ -106,6 +130,11 @@ export default {
       color: rgb(124, 124, 124);
       padding-right: 7px;
     }
+  }
+
+  // Themes
+  &.theme-dark {
+    background-color: $dark !important;
   }
 }
 </style>

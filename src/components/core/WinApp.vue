@@ -1,9 +1,9 @@
 <template>
   <div
-    class="win-app"
+    class="win-app anim-fade-in"
     ref="winapp"
     @mousedown="focusApp"
-    :class="{ 'focused': focused }"
+    :class="[ {'focused': focused }, { 'anim-fade-out' : isDestroyed } ]"
     v-on-clickaway="away"
   >
     <!-- Border -->
@@ -13,6 +13,7 @@
       @click-maximize="$emit('click-maximize')"
       @click-minimize="$emit('click-minimize')"
       :title="(this.title != null) ? this.title : ''"
+      :theme="this.theme"
     />
 
     <!-- Custom app content -->
@@ -41,6 +42,11 @@ export default {
       type: String,
       default: null,
       required: false
+    },
+    theme: {
+      type: String,
+      default: 'light',
+      required: false
     }
   },
   data() {
@@ -51,14 +57,20 @@ export default {
         movementX: 0,
         movementY: 0
       },
-      focused: true
+      focused: true,
+      isDestroyed: false
     };
   },
   methods: {
     closeApp() {
-      this.$emit('close');
-      this.$destroy();
-      this.$el.parentNode.removeChild(this.$el);
+      // Allow exit animation to play
+      this.isDestroyed = true;
+      let _this = this;
+      setTimeout(function() {
+        _this.$emit('close');
+        _this.$destroy();
+        _this.$el.parentNode.removeChild(_this.$el);
+      }, 100);
     },
     focusApp() {
       this.focused = true;
@@ -73,7 +85,38 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.win-app {
+}
 .focused {
   z-index: 5 !important;
+}
+
+// Animations
+.anim-fade-in {
+  animation: fadeAnimIn 0.1s ease-out forwards;
+}
+@keyframes fadeAnimIn {
+  from {
+    opacity: 0.5;
+    transform: scale(0.97, 0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1, 1);
+  }
+}
+
+.anim-fade-out {
+  animation: fadeAnimOut 0.1s ease-out forwards;
+}
+@keyframes fadeAnimOut {
+  from {
+    opacity: 1;
+    transform: scale(1, 1);
+  }
+  to {
+    opacity: 0.5;
+    transform: scale(0.97, 0.97);
+  }
 }
 </style>

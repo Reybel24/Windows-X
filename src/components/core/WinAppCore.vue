@@ -72,6 +72,7 @@ export default {
         opacity: this.isMinimized ? 0 : 1
       };
     }
-  }
+  },
+  mounted() {}
 };
 </script>
