@@ -82,7 +82,14 @@
             "name": "secret christmas photo",
             "ext": "jpg",
             "path": "~/Windows X/User/Libraries/Pictures",
-            "real_path": "@/appdata/Windows/files/movies.txt"
+            "real_path": "@/appdata/Windows/files/spongebob_meme_0.jpg"
+        },
+        {
+            "type": "file",
+            "name": "confusion",
+            "ext": "png",
+            "path": "~/Windows X/User/Libraries/Pictures",
+            "real_path": "@/appdata/Windows/files/confusion.png"
         }
     ]
 }
