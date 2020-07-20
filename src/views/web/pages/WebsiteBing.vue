@@ -12,26 +12,59 @@
 // Required
 import WebCore from '@/views/web/core/WebCore';
 
+// For requests to api
+const axios = require('axios');
+
 export default {
   name: 'Bing',
   mixins: [WebCore],
   components: {},
   data() {
-    return {};
+    return {
+      apiURL:
+        'https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=en-US',
+      urlImg: null // https://bing.com/th?id=OHR.EarthriseSequence_EN-US0444696608_1920x1080.jpg&rf=LaDigue_1920x1080.jpg&pid=hp
+    };
   },
   methods: {
-    onClose() {}
+    onClose() {},
+    async fetchImageOfTheDay() {
+      // Fetch from url
+      const options = {
+        url: this.apiURL,
+        methods: 'GET',
+        headers: { 'content-type': 'application/json' }
+      };
+
+      axios(options)
+        .then(response => {
+          console.log(response);
+          this.urlImg = 'http://bing.com' + response.images[0].url;
+          resolve(this.urlImg);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
   },
-  mounted() {
+  async mounted() {
     // Focus search box after page load
     let _this = this;
     setTimeout(function() {
       _this.$refs.searchBox.focus();
     }, 100);
+
+    this.fetchImageOfTheDay();
   },
   computed: {
     wallpaper: function() {
-      return `url(${require('@/appdata/Web/Bing/images/moth.jpg')})`;
+      if (this.urlImg != null) {
+        // From api
+        return 'url(' + this.urlImg + ')';
+      } else {
+        // Local
+        return `url(${require('@/appdata/Web/Bing/images/moth.jpg')})`;
+      }
     },
     logo: function() {
       return require('@/appdata/Web/Bing/images/logo_light.png');
