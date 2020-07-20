@@ -115,6 +115,7 @@ export default {
     loadBookmarks() {
       this.bookmarks.push(this.sites[0]);
       this.bookmarks.push(this.sites[1]);
+      this.bookmarks.push(this.sites[2]);
     },
     navigateToHome() {
       this.currentSite = this.sites[0];
@@ -198,6 +199,10 @@ export default {
         -ms-overflow-style: none; /* IE and Edge */
         scrollbar-width: none; /* Firefox */
         transition: 0.3s;
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
 
         .address {
           padding: 0 0 0 10px;

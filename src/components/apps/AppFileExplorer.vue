@@ -377,6 +377,10 @@ export default {
         scrollbar-width: none; /* Firefox */
         transition: 0.3s;
 
+        &::-webkit-scrollbar {
+          display: none;
+        }
+
         .node {
           color: rgb(224, 224, 224);
           font-size: 0.9em;
