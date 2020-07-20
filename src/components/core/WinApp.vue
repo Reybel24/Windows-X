@@ -13,6 +13,7 @@
       @click-maximize="$emit('click-maximize')"
       @click-minimize="$emit('click-minimize')"
       :title="(this.title != null) ? this.title : ''"
+      :theme="this.theme"
     />
 
     <!-- Custom app content -->
@@ -40,6 +41,11 @@ export default {
     title: {
       type: String,
       default: null,
+      required: false
+    },
+    theme: {
+      type: String,
+      default: 'light',
       required: false
     }
   },
