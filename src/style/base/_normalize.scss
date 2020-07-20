@@ -1,8 +1,8 @@
 /* Fonts */
 @font-face {
-    font-family: 'SegoeUI';
-    src: url('~@/assets/fonts/Segoe UI.ttf') format('truetype');
-  }
+    font-family: "SegoeUI";
+    src: url("~@/assets/fonts/Segoe UI.ttf") format("truetype");
+}
 
 body {
     margin: 0;
@@ -20,8 +20,18 @@ body {
 div {
     display: flex;
 }
+section {
+    display: flex;
+}
 
 /* Text styles */
 .strong {
     font-weight: 600;
+}
+
+// Inputs
+input {
+    box-shadow: none;
+    border: none;
+    outline: none;
 }
