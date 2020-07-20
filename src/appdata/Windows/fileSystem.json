@@ -2,62 +2,94 @@
     "C": [
         {
             "type": "folder",
-            "name": "Program Files",
+            "name": "Windows X",
             "path": "~"
+        },
+        {
+            "type": "folder",
+            "name": "Program Files",
+            "path": "~/Windows X"
+        },
+        {
+            "type": "folder",
+            "name": "User",
+            "path": "~/Windows X"
+        },
+        {
+            "type": "folder",
+            "name": "Libraries",
+            "path": "~/Windows X/User"
         },
         {
             "type": "folder",
             "name": "Desktop",
-            "path": "~"
+            "path": "~/Windows X/User"
+        },
+        {
+            "type": "folder",
+            "name": "Downloads",
+            "path": "~/Windows X/User"
+        },
+        {
+            "type": "folder",
+            "name": "Documents",
+            "path": "~/Windows X/User/Libraries"
         },
         {
             "type": "folder",
             "name": "notes",
-            "path": "~/Desktop"
+            "path": "~/Windows X/User/Libraries/Documents"
         },
         {
             "type": "file",
             "name": "to-do",
             "ext": "txt",
-            "path": "~/Desktop/notes",
+            "path": "~/Windows X/User/Libraries/Documents/notes",
             "real_path": "@/appdata/Windows/files/to-do.txt"
+        },
+        {
+            "type": "folder",
+            "name": "misc",
+            "path": "~/Windows X/User/Libraries/Documents/notes"
         },
         {
             "type": "file",
             "name": "poems",
             "ext": "txt",
-            "path": "~/Desktop/notes/misc",
+            "path": "~/Windows X/User/Libraries/Documents/notes/misc",
             "real_path": "@/appdata/Windows/files/poems.txt"
         },
         {
             "type": "file",
             "name": "shopping-list",
             "ext": "txt",
-            "path": "~/Desktop/notes"
-        },
-        {
-            "type": "folder",
-            "name": "misc",
-            "path": "~/Desktop/notes"
+            "path": "~/Windows X/User/Libraries/Documents"
         },
         {
             "type": "file",
             "name": "movies",
             "ext": "txt",
-            "path": "~/Desktop/notes",
+            "path": "~/Windows X/User/Libraries/Documents",
             "real_path": "@/appdata/Windows/files/movies.txt"
         },
         {
             "type": "folder",
             "name": "Pictures",
-            "path": "~/Desktop"
+            "path": "~/Windows X/User/Libraries"
         },
         {
             "type": "file",
             "name": "secret christmas photo",
             "ext": "jpg",
-            "path": "~/Desktop/Pictures",
-            "real_path": "@/appdata/Windows/files/movies.txt"
+            "path": "~/Windows X/User/Libraries/Pictures",
+            "real_path": "@/appdata/Windows/files/spongebob_meme_0.jpg"
+        },
+        {
+            "type": "file",
+            "name": "confusion",
+            "ext": "png",
+            "path": "~/Windows X/User/Libraries/Pictures",
+            "real_path": "@/appdata/Windows/files/confusion.png"
         }
     ]
 }
