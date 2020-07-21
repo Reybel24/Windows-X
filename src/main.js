@@ -8,7 +8,8 @@ import store from './store'
 import { library, dom } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { fas } from '@fortawesome/free-solid-svg-icons'
-library.add(fas)
+import { fab } from '@fortawesome/free-brands-svg-icons'
+library.add(fas, fab)
 
 // For scrolling when new content is added
 import VueChatScroll from 'vue-chat-scroll'
