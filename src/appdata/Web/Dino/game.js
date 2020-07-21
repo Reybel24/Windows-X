@@ -25,7 +25,7 @@
         this.detailsButton = this.outerContainerEl.querySelector('#details-button');
 
         this.config = opt_config || Runner.config;
-        console.log(this.config)
+        // console.log(this.config)
 
         this.dimensions = Runner.defaultDimensions;
 
@@ -524,7 +524,7 @@
          * Update the game frame and schedules the next one.
          */
         update: function () {
-            console.log('update')
+            // console.log('update')
             this.updatePending = false;
 
             var now = getTimeStamp();
