@@ -15,9 +15,6 @@ import WebCore from '@/views/web/core/WebCore';
 // For requests to api
 const axios = require('axios');
 
-// Wallpaper directory
-const imagesDir = '@/appdata/Web/Bing/images/';
-
 // Util
 import { randomNumberBetween } from '@/util/common.js';
 
@@ -30,13 +27,28 @@ export default {
       apiURL:
         'https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=en-US',
       apiImg: null, // https://bing.com/th?id=OHR.EarthriseSequence_EN-US0444696608_1920x1080.jpg&rf=LaDigue_1920x1080.jpg&pid=hp
+      imagesDir: '@/appdata/Web/Bing/images/',
       backgroundImg: null,
-      localImages: ['happyballoon', 'meerkat', 'moth', 'aquarium', 'badlands', 'cubs', 'kamchatka', 'nantucketisland', 'nelderplot', 'paris']
+      localImages: [
+        'happyballoon',
+        'meerkat',
+        'moth',
+        'aquarium',
+        'badlands',
+        'cubs',
+        'kamchatka',
+        'nantucketisland',
+        'nelderplot',
+        'paris'
+      ]
     };
   },
   methods: {
     onClose() {},
     async fetchImageOfTheDay() {
+      // This is here temporarily since I cannot fetch from the API (cors error)
+      reject();
+
       return new Promise((resolve, reject) => {
         // Fetch from url
         const options = {
@@ -47,12 +59,12 @@ export default {
 
         axios(options)
           .then(response => {
-            console.log(response);
+            // console.log(response);
             this.apiImg = 'http://bing.com' + response.images[0].url;
             resolve(true);
           })
           .catch(error => {
-            console.log(error);
+            // console.log(error);
             reject();
           });
       });
@@ -70,7 +82,7 @@ export default {
     }, 100);
 
     this.fetchImageOfTheDay().catch(error => {
-      console.log('fetching local');
+      // Api error, fetch local
       this.setRandomWallpaper();
     });
   },
@@ -78,11 +90,13 @@ export default {
     wallpaper: function() {
       if (this.apiImg != null) {
         // Api
-        return `url(${require(this.apiImg)})`;
+        // The quotes are there to avoid throwing a warning in the console (the-request-of-a-dependency-is-an-expression)
+        return `url(${require('' + this.apiImg)})`;
       } else if (this.backgroundImg != null) {
         // Local
         return `url(${require('@/appdata/Web/Bing/images/' +
-          this.backgroundImg + '.jpg')})`;
+          this.backgroundImg +
+          '.jpg')})`;
       }
     },
     logo: function() {
