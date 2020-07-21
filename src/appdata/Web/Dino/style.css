@@ -9,6 +9,10 @@ html, body {
   height: 100%;
 }
 
+.game {
+  background-color: white;
+}
+
 .icon {
   -webkit-user-select: none;
   user-select: none;

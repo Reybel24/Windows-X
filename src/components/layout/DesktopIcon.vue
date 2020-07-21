@@ -128,7 +128,8 @@ export default {
   }
 
   &:hover:active {
-    background-color: red;
+    // background-color: rgb(190, 225, 255);
+    @include anim-scale(.98)
   }
 
   .label {

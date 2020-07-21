@@ -2,4 +2,6 @@
 - add switchable desktop wallpapers
 - add a web browser (maybe?)
 - youtube app
+- digital currency
+- virtual stock market
 - sleep (i've been up for 37 hours now and running on straight coffee)
