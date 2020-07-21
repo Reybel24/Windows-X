@@ -16,7 +16,7 @@
           <div class="forward" @click="navigateBreadcrumb(dir.FORWARD)">
             <i class="fas fa-arrow-right icon"></i>
           </div>
-          <div class="refresh">
+          <div class="refresh" @click="refreshSite()">
             <i class="fas fa-redo-alt icon"></i>
           </div>
           <div class="home">
@@ -42,7 +42,7 @@
         >{{ bookmark.name }}</div>
       </div>
       <div class="webview">
-        <component v-if="currentSite != null" :is="this.currentSite.component" />
+        <component v-if="currentSite != null" :is="this.currentSite.component" :key="refreshKey" />
       </div>
     </div>
   </WinApp>
@@ -81,7 +81,8 @@ export default {
       },
       breadcrumb: [],
       breadcrumbIndex: 0,
-      bookmarks: []
+      bookmarks: [],
+      refreshKey: 0
     };
   },
   methods: {
@@ -128,6 +129,9 @@ export default {
         }
       }
       return null;
+    },
+    refreshSite() {
+      this.refreshKey++;
     }
   },
   mounted() {
