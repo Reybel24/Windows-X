@@ -15,6 +15,12 @@ import WebCore from '@/views/web/core/WebCore';
 // For requests to api
 const axios = require('axios');
 
+// Wallpaper directory
+const imagesDir = '@/appdata/Web/Bing/images/';
+
+// Util
+import { randomNumberBetween } from '@/util/common.js';
+
 export default {
   name: 'Bing',
   mixins: [WebCore],
@@ -23,28 +29,37 @@ export default {
     return {
       apiURL:
         'https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=en-US',
-      urlImg: null // https://bing.com/th?id=OHR.EarthriseSequence_EN-US0444696608_1920x1080.jpg&rf=LaDigue_1920x1080.jpg&pid=hp
+      apiImg: null, // https://bing.com/th?id=OHR.EarthriseSequence_EN-US0444696608_1920x1080.jpg&rf=LaDigue_1920x1080.jpg&pid=hp
+      backgroundImg: null,
+      localImages: ['happyballoon', 'meerkat', 'moth', 'aquarium', 'badlands', 'cubs', 'kamchatka', 'nantucketisland', 'nelderplot', 'paris']
     };
   },
   methods: {
     onClose() {},
     async fetchImageOfTheDay() {
-      // Fetch from url
-      const options = {
-        url: this.apiURL,
-        methods: 'GET',
-        headers: { 'content-type': 'application/json' }
-      };
+      return new Promise((resolve, reject) => {
+        // Fetch from url
+        const options = {
+          url: this.apiURL,
+          methods: 'GET',
+          headers: { 'content-type': 'application/json' }
+        };
 
-      axios(options)
-        .then(response => {
-          console.log(response);
-          this.urlImg = 'http://bing.com' + response.images[0].url;
-          resolve(this.urlImg);
-        })
-        .catch(error => {
-          console.log(error);
-        });
+        axios(options)
+          .then(response => {
+            console.log(response);
+            this.apiImg = 'http://bing.com' + response.images[0].url;
+            resolve(true);
+          })
+          .catch(error => {
+            console.log(error);
+            reject();
+          });
+      });
+    },
+    setRandomWallpaper() {
+      const randIndex = randomNumberBetween(0, this.localImages.length - 1);
+      this.backgroundImg = this.localImages[randIndex];
     }
   },
   async mounted() {
@@ -54,16 +69,20 @@ export default {
       _this.$refs.searchBox.focus();
     }, 100);
 
-    this.fetchImageOfTheDay();
+    this.fetchImageOfTheDay().catch(error => {
+      console.log('fetching local');
+      this.setRandomWallpaper();
+    });
   },
   computed: {
     wallpaper: function() {
-      if (this.urlImg != null) {
-        // From api
-        return 'url(' + this.urlImg + ')';
-      } else {
+      if (this.apiImg != null) {
+        // Api
+        return `url(${require(this.apiImg)})`;
+      } else if (this.backgroundImg != null) {
         // Local
-        return `url(${require('@/appdata/Web/Bing/images/moth.jpg')})`;
+        return `url(${require('@/appdata/Web/Bing/images/' +
+          this.backgroundImg + '.jpg')})`;
       }
     },
     logo: function() {
