@@ -1,7 +1,6 @@
 <template>
   <WinApp
     :style="coreStyle"
-    @close="onClose"
     @click-maximize="maximizeApp"
     @click-minimize="minimizeApp"
     :title="'Explorer'"
@@ -104,7 +103,6 @@ export default {
     };
   },
   methods: {
-    onClose() {},
     // Will navigate to the given path and return a folder or file
     getStructByAbsPath(path) {
       // Example path: '~/Desktop/notes/shopping-list.txt

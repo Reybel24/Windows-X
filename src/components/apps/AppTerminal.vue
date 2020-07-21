@@ -1,5 +1,10 @@
 <template>
-  <WinApp class="app-terminal" :class="calcTerminalBgColor" :style="coreStyle" :title="'Powershell'">
+  <WinApp
+    class="app-terminal"
+    :class="calcTerminalBgColor"
+    :style="coreStyle"
+    :title="'Powershell'"
+  >
     <!-- Content (text) -->
     <div
       class="terminal-inner"
@@ -158,7 +163,7 @@ export default {
             if (cmd.arguments[1] == 'serve') {
               if (!this.isServed) {
                 this.isServed = true;
-                console.log('hey')
+                console.log('hey');
                 // Some output to terminal
                 this.showOutput({
                   output: 'DONE Compiled successfully in 261ms',

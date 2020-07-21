@@ -1,6 +1,7 @@
 <script>
 // Common functionality for windows apps
 import store from '@/store';
+import Vue from 'vue';
 export default {
   props: {
     app: {
@@ -8,7 +9,7 @@ export default {
       default: () => {},
       required: false
     },
-    procId: {
+    pid: {
       type: Number,
       default: -1,
       required: false
@@ -33,17 +34,6 @@ export default {
     };
   },
   methods: {
-    exitApp() {
-      // Clean up and destroy
-      // Remove process
-      store.dispatch({
-        type: 'destroyProccess',
-        processId: this.procId
-      });
-
-      // Destroy self
-      this.$destroy();
-    },
     maximizeApp() {
       this.winSize.width = window.innerWidth;
       this.winSize.height = window.innerWidth - 43; // taskbar height
@@ -60,6 +50,10 @@ export default {
     setInitialPos(x, y) {
       this.winPos.x = x;
       this.winPos.y = y;
+    },
+    getWinApp() {
+      // Return WinApp component (not the app component itself)
+      return this.$children[0];
     }
   },
   computed: {

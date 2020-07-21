@@ -1,7 +1,6 @@
 <template>
   <WinApp
     :style="coreStyle"
-    @close="onClose"
     @click-maximize="maximizeApp"
     @click-minimize="minimizeApp"
     :title="'Firefox'"
@@ -86,7 +85,6 @@ export default {
     };
   },
   methods: {
-    onClose() {},
     navigateBreadcrumb(dir) {
       if (dir == this.dir.FORWARD) {
         // this.breadcrumbIndex++;

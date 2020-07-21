@@ -22,6 +22,7 @@ import WinAppHooks from '@/components/core/WinAppHooks.vue';
 
 // Layout
 import Taskbar from '@/components/layout/Taskbar.vue';
+// import TaskbarTop from '@/components/layout/TaskbarTop.vue';
 import StartMenu from '@/components/layout/StartMenu.vue';
 
 // Desktop icons
@@ -34,6 +35,7 @@ export default {
   mixins: [Win32, WinAppHooks],
   components: {
     Taskbar,
+    // TaskbarTop,
     DesktopIcon,
     StartMenu
   },
@@ -45,7 +47,7 @@ export default {
   methods: {},
   computed: {
     desktopWallpaper: function() {
-      return `url(${require('@/assets/wallpapers/diamond.jpg')})`;
+      return `url(${require('@/assets/wallpapers/windows-10.jpg')})`;
     }
   },
   mounted() {}
@@ -61,6 +63,7 @@ export default {
   background-attachment: fixed;
   background-position: center;
   background-size: cover;
+  flex-direction: column;
 
   .icons {
     position: absolute;

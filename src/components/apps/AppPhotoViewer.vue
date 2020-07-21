@@ -1,7 +1,6 @@
 <template>
   <WinApp
     :style="coreStyle"
-    @close="onClose"
     @click-maximize="maximizeApp"
     @click-minimize="minimizeApp"
     :title="fullImgName"
@@ -36,7 +35,6 @@ export default {
     };
   },
   methods: {
-    onClose() {}
   },
   mounted() {
     // Set initial window position

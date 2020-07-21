@@ -24,17 +24,20 @@ export default {
         return;
 
       // Add to processes
-      var _procId = await this.$store.dispatch({
+      var _proccess = await this.$store.dispatch({
         type: 'createProccess',
         app: app
       });
 
       var ComponentClass = Vue.extend(_comp);
       var instance = new ComponentClass({
-        propsData: { app: app, procId: _procId, payload: payload }
+        propsData: { app: app, pid: _proccess.pid, payload: payload }
       });
+
       instance.$mount(); // pass nothing
       this.$refs.apps.appendChild(instance.$el);
+
+      _proccess.instance = instance.getWinApp();
 
       this.addAppToTaskbar();
     },
