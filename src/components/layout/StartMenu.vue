@@ -5,14 +5,17 @@
     v-on-clickaway="closeMenu"
   >
     <section class="actions-group">
-      <div class="action">
-        <i class="fas fa-power-off icon"></i>
-      </div>
-      <div class="action">
-        <i class="fas fa-lock icon"></i>
+      <div class="action" @click="launchApp('File Explorer', { openToDir: '~/Windows X/User/Libraries/Documents' })">
+        <i class="fas fa-file-image icon"></i>
       </div>
       <div class="action">
         <i class="fas fa-sliders-h icon"></i>
+      </div>
+      <div class="action" @click="pressLock">
+        <i class="fas fa-lock icon"></i>
+      </div>
+      <div class="action" @click="pressPower">
+        <i class="fas fa-power-off icon"></i>
       </div>
     </section>
     <section class="tiles" id="tiles">
@@ -28,6 +31,7 @@
 
 <script>
 import { EventBus } from '@/util/event-bus.js';
+import store from '@/store';
 import { mixin as clickaway } from 'vue-clickaway';
 
 // Layout
@@ -47,12 +51,12 @@ export default {
     return {
       isOpen: false,
       tiles: [
-        { name: 'Weather', icon: 'fas fa-cloud-showers-heavy' },
+        { name: 'Weather', icon: 'fas fa-cloud-showers-heavy', callback: () => { this.launchApp('Notepad') } },
         { name: 'Mail', icon: 'fas fa-envelope-open' },
-        { name: 'Photos', icon: 'fas fa-image' },
-        { name: 'Music', icon: 'fas fa-music' },
+        { name: 'Photos', icon: 'fas fa-image', callback: () => { this.launchApp('File Explorer', { openToDir: '~/Windows X/User/Libraries/Pictures' }) } },
+        { name: 'Music', icon: 'fas fa-music', callback: () => { this.launchApp('Spotify') } },
         { name: 'Movies & TV', icon: 'fas fa-film' },
-        { name: 'Firefox', icon: 'fab fa-firefox-browser' }
+        { name: 'Firefox', icon: 'fab fa-firefox-browser', callback: () => { this.launchApp('Firefox') } }
       ],
       ps: null
     };
@@ -67,10 +71,22 @@ export default {
     },
     closeMenu() {
       if (this.isOpen) {
-        console.log('closing');
         this.isOpen = false;
         this.ps.scrollTop = 0;
       }
+    },
+    pressLock() {
+      EventBus.$emit('LOCK_PC');
+    },
+    launchApp(appName, payload = null) {
+      var app = store.getters.getAppByName(appName);
+      if (app != null) EventBus.$emit('LAUNCH_APP', app, payload);
+      this.closeMenu();
+    },
+    pressPower() {
+      store.dispatch({
+        type: 'powerOffPC'
+      });
     }
   },
   computed: {
@@ -116,7 +132,7 @@ export default {
   visibility: hidden;
 
   .actions-group {
-    width: 110px;
+    width: 70px;
     height: 100%;
     flex-direction: column;
     justify-content: flex-end;
@@ -128,7 +144,7 @@ export default {
       align-items: center;
       justify-content: center;
       padding: 14px 0 14px 0;
-      transition: .15s;
+      transition: 0.15s;
 
       &:hover {
         background-color: rgb(108, 107, 107);
@@ -136,7 +152,7 @@ export default {
 
       &:hover:active {
         background-color: rgb(134, 134, 134);
-        
+
         .icon {
           transform: scale(0.97, 0.97);
         }

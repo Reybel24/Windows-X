@@ -28,7 +28,7 @@ export default {
   },
   methods: {
     onClickTile() {
-      console.log('opening tile');
+      if (this.tile.callback) this.tile.callback();
       EventBus.$emit('CLOSE_START_MENU');
     }
   },
