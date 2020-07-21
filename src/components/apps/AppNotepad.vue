@@ -1,7 +1,7 @@
 <template>
   <WinApp
+    :title="'Untitled - Notepad'"
     :style="coreStyle"
-    @close="onClose"
     @click-maximize="maximizeApp"
     @click-minimize="minimizeApp"
   >
@@ -37,7 +37,6 @@ export default {
     };
   },
   methods: {
-    onClose() {}
   },
   mounted() {
     // Set initial window position

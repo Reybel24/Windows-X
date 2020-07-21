@@ -1,8 +1,8 @@
 <template>
   <div
-    class="lockscreen"
+    class="lockscreen show"
     :style="lockStyle"
-    :class="{ fadeOut : passwordMatched }"
+    :class="{ hidden : !$store.getters.getIsLocked() }"
     @click="showSignIn"
   >
     <div class="lockImg" :style="lockImgStyle">
@@ -19,15 +19,21 @@
         type="password"
         ref="pass"
         placeholder="Password"
+        v-model="input"
         @input="checkPassword($event.target.value)"
       />
-      <div class="hint">Psstt...Try 'spider'</div>
+      <div class="hint">
+        Psstt...Try
+        <div class="secret" @click="fillPassword">'spider'</div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { EventBus } from '@/util/event-bus.js';
 import store from '@/store';
+
 export default {
   name: 'Lockscreen',
   components: {},
@@ -35,10 +41,15 @@ export default {
     return {
       showingSignIn: false,
       password: 'spider',
+      input: '',
       passwordMatched: false
     };
   },
   methods: {
+    showLockscreen() {
+      this.input = '';
+      this.showingSignIn = false;
+    },
     unlock() {
       store.dispatch({
         type: 'unlockPC'
@@ -54,13 +65,12 @@ export default {
       if (input == this.password) {
         // Success
         this.passwordMatched = true;
-
-        // Allow animation to play
-        let _this = this;
-        setTimeout(function() {
-          _this.unlock();
-        }, 1000);
+        this.unlock();
       }
+    },
+    fillPassword() {
+      this.input = this.password;
+      this.checkPassword(this.input);
     }
   },
   computed: {
@@ -84,7 +94,17 @@ export default {
       };
     }
   },
-  mounted() {}
+  mounted() {
+    // Subscriptions
+    EventBus.$on('LOCK_PC', () => {
+      store.dispatch({ type: 'lockPC' });
+      this.showLockscreen();
+    });
+  },
+  destroyed() {
+    // Stop listening
+    EventBus.$off('LOCK_PC');
+  }
 };
 </script>
 
@@ -99,6 +119,22 @@ export default {
   background-attachment: fixed;
   background-position: center;
   background-size: cover;
+  opacity: 1;
+  visibility: visible;
+  transition-property: opacity, visibility;
+  transition-delay: 200ms, 0ms;
+  transition-duration: 700ms, 0ms;
+
+  &.hidden {
+    opacity: 0;
+    visibility: hidden;
+
+    .lockImg,
+    .dimmer {
+      // Transition-out time
+      transition: 0.5s;
+    }
+  }
 
   .lockImg {
     width: 100vw;
@@ -159,6 +195,11 @@ export default {
       color: white;
       font-size: 0.8;
       margin-top: 16px;
+
+      .secret {
+        padding-left: 6px;
+        cursor: pointer;
+      }
     }
 
     input {
@@ -176,7 +217,7 @@ export default {
   width: 100%;
   height: 100%;
   opacity: 0;
-  transition: 1.5s;
+  transition-duration: 1.5s;
 }
 
 // Animations
@@ -199,6 +240,7 @@ export default {
     opacity: 1;
   }
   to {
+    visibility: hidden;
     opacity: 0;
   }
 }

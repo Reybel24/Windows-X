@@ -15,6 +15,11 @@ library.add(fas, fab)
 import VueChatScroll from 'vue-chat-scroll'
 Vue.use(VueChatScroll);
 
+// Scrollbar
+import PerfectScrollbar from 'vue2-perfect-scrollbar'
+import 'vue2-perfect-scrollbar/dist/vue2-perfect-scrollbar.css'
+Vue.use(PerfectScrollbar)
+
 // Event bus
 // import EventBus from '@/util/event-bus.js'
 

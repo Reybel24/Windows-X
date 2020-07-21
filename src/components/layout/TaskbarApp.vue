@@ -37,7 +37,7 @@ export default {
     onClick () {
       // this.isOpen = !this.isOpen
       // if (!this.isOpen) this.isActive = false
-      EventBus.$emit('OPEN_APP', this.app)
+      EventBus.$emit('LAUNCH_APP', this.app)
     }
   },
   computed: {

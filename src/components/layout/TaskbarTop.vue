@@ -1,18 +1,7 @@
 <template>
   <div class="taskbar">
-    <div class="windows-logo" @click="openStartMenu()">
-      <i class="fab fa-windows icon"></i>
-    </div>
-
-    <!-- Apps -->
-    <div class="apps-group">
-      <TaskbarApp
-        v-for="(app, index) in this.$store.getters.getAppsInTaskbar"
-        :key="index"
-        :app="app"
-        :icon="app.icon"
-        :isOpen="app.isOpen"
-      />
+    
+    <div class="time">Monday, 06 July at 06:06 PM</div>
     </div>
   </div>
 </template>
@@ -40,13 +29,15 @@ export default {
 <style scoped lang='scss'>
 .taskbar {
   width: 100%;
-  height: 43px;
-  margin-top: auto;
-  background-color: rgb(37, 37, 37);
+  height: 33px;
+  background-color: rgb(247, 247, 247);
   opacity: 0.94;
   align-items: center;
+  justify-content: center;
+  // position: absolute;
   padding: 0 8px 0 0px;
   z-index: 10;
+  box-shadow: -4px 7px 6px 0px rgba(0, 0, 0, 0.21);
 
   .windows-logo {
     width: 27px;
@@ -75,6 +66,11 @@ export default {
       width: 100%;
       height: 60%;
     }
+  }
+
+  .time {
+    color: rgb(34, 34, 34);
+    font-size: .9em;
   }
 
   .apps-group {

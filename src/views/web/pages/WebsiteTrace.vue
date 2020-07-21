@@ -42,7 +42,7 @@ export default {
     return {};
   },
   methods: {
-    onClose() {}
+    onExit() {}
   },
   mounted() {},
   computed: {

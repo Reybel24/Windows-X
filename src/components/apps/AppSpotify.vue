@@ -1,7 +1,7 @@
 <template>
   <WinApp
     :style="coreStyle"
-    @close="onClose"
+    @exit="onExit"
     @click-maximize="maximizeApp"
     @click-minimize="minimizeApp"
     :title="'Spotify'"
@@ -147,12 +147,9 @@ export default {
         this.isPlaying = true;
       }
     },
-    onClose() {
-      // Any app-specific clean-up
+    onExit() {
+      // App-specific clean-up
       if (this.sound != null) this.sound.unload();
-
-      // Finally
-      this.exitApp();
     },
     playRandomSong() {
       console.log("playing random")

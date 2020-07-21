@@ -7,6 +7,7 @@ import Terminal from '@/components/apps/AppTerminal.vue';
 import Notepad from '@/components/apps/AppNotepad.vue';
 import PhotoViewer from '@/components/apps/AppPhotoViewer.vue';
 import Firefox from '@/components/apps/AppFirefox.vue';
+import TaskManager from '@/components/apps/AppTaskManager.vue';
 
 // Need access to store
 import store from '@/store';
@@ -19,7 +20,8 @@ export default {
     FileExplorer,
     Notepad,
     PhotoViewer,
-    Firefox
+    Firefox,
+    TaskManager
   },
   methods: {
     getAppForFileExt(ext) {
@@ -151,6 +153,16 @@ export default {
         icon: 'icon_picture',
         installed: 1,
         pinned: 0,
+        isOpen: false,
+        stackable: true
+      },
+      {
+        appId: 'a9',
+        name: 'Task Manager',
+        component: 'TaskManager',
+        icon: 'icon_taskManager',
+        installed: 1,
+        pinned: 1,
         isOpen: false,
         stackable: true
       }

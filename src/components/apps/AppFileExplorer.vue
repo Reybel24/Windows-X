@@ -1,7 +1,6 @@
 <template>
   <WinApp
     :style="coreStyle"
-    @close="onClose"
     @click-maximize="maximizeApp"
     @click-minimize="minimizeApp"
     :title="'Explorer'"
@@ -83,7 +82,7 @@ export default {
     return {
       drive_c: fileSystem.C,
       rootPath: '~', // root
-      activeDir: '~/Windows X/User/Libraries', // Default open dir
+      activeDir: '~/Windows X/User', // Default open dir
       pinnedDirs: [
         {
           groupPath: '~/Windows X/User/Libraries',
@@ -104,7 +103,6 @@ export default {
     };
   },
   methods: {
-    onClose() {},
     // Will navigate to the given path and return a folder or file
     getStructByAbsPath(path) {
       // Example path: '~/Desktop/notes/shopping-list.txt
@@ -245,6 +243,13 @@ export default {
   mounted() {
     // Set initial window position
     this.setInitialPos(550, 250);
+
+    // Check payload for open dir
+    if (this.payload) {
+      if ('openToDir' in this.payload) {
+        this.activeDir = this.payload.openToDir;
+      }
+    }
 
     // Add initial position to breadcrumb trail
     this.addPathToBreadcrumb(this.activeDir);

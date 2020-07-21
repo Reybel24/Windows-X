@@ -71,7 +71,7 @@ export default {
 
       if (this.clicks >= 2) {
         this.clicks = 0;
-        EventBus.$emit('OPEN_APP', this.app);
+        EventBus.$emit('LAUNCH_APP', this.app);
       } else {
         // do nothing
       }
@@ -128,7 +128,8 @@ export default {
   }
 
   &:hover:active {
-    background-color: red;
+    // background-color: rgb(190, 225, 255);
+    @include anim-scale(.98)
   }
 
   .label {

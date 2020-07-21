@@ -44,7 +44,7 @@ export default {
     };
   },
   methods: {
-    onClose() {},
+    onExit() {},
     async fetchImageOfTheDay() {
       // This is here temporarily since I cannot fetch from the API (cors error)
       reject();

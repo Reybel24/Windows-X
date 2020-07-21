@@ -17,28 +17,20 @@ export default new Vuex.Store({
       { appId: 'g1', pos: { x: 170, y: 120 } },
       { appId: 'a7', pos: { x: 250, y: 120 } },
     ],
+    // These apps are pinned to the taskbar
     taskbarShortcuts: [
       { appId: 'b0', pos: 0 },
+      { appId: 'a1', pos: 0 },
       { appId: 'b2', pos: 0 },
       { appId: 'b3', pos: 0 },
       { appId: 'a5', pos: 0 },
       { appId: 'b4', pos: 0 },
       { appId: 'a6', pos: 0 },
+      { appId: 'a9', pos: 0 }
     ],
-    processes: [
-    ],
+    processes: [],
+    on: true,
     locked: true,
-
-    // These apps are pinned to the taskbar
-    taskbarShortcuts: [
-      'Firefox',
-      'File Explorer',
-      'Spotify',
-      'Steam',
-      'Email',
-      'Microsoft Word',
-      'Terminal'
-    ]
   },
   getters: {
     getAppsInTaskbar: state => {
@@ -47,7 +39,7 @@ export default new Vuex.Store({
       for (const taskbarApp of state.taskbarShortcuts) {
         // Get app details
         for (const app of state.apps) {
-          if (taskbarApp === app.name) {
+          if (taskbarApp.appId === app.appId) {
             _taskbar.push(app)
           }
         }
@@ -69,8 +61,11 @@ export default new Vuex.Store({
         return state.processes.length
       }
     },
-    getIsLocked: state => {
+    getIsLocked: state => () => {
       return state.locked
+    },
+    getIsOn: state => () => {
+      return state.on
     },
     getDesktopShortcuts: state => (app = null) => {
       if (app == null) {
@@ -103,11 +98,14 @@ export default new Vuex.Store({
         }
       }
       return null
-    }
+    },
+    getRunningProcesses: state => () => {
+      return state.processes
+    },
   },
   mutations: {
     addProcess(state, payload) {
-      state.processes.push({ pid: payload.procId, name: payload.app })
+      state.processes.push(payload.process)
     },
     removeProcess(state, processId) {
       for (var process of state.processes) {
@@ -131,15 +129,16 @@ export default new Vuex.Store({
         // Generate random process id
         const _randomId = randomNumberBetween(0, 10000);
 
-        commit('addProcess', { app: payload.app.name, procId: _randomId })
+        var _process = { pid: _randomId, name: payload.app.name, icon: payload.app.icon, instance: null }
+        commit('addProcess', { process: _process })
 
         // Return the process id
-        resolve(_randomId)
+        resolve(_process)
       });
     },
     destroyProccess({ commit, state }, payload) {
       return new Promise((resolve, reject) => {
-        commit('removeProcess', payload.processId)
+        commit('removeProcess', payload.pid)
         resolve(0)
       });
     },
@@ -152,6 +151,12 @@ export default new Vuex.Store({
     lockPC({ commit, state }, payload) {
       return new Promise((resolve, reject) => {
         state.locked = true
+        resolve(0)
+      });
+    },
+    powerOffPC({ commit, state }, payload) {
+      return new Promise((resolve, reject) => {
+        state.on = false
         resolve(0)
       });
     },

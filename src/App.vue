@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <Lockscreen />
-    <Desktop />
+    <Lockscreen v-if="$store.getters.getIsOn()" />
+    <Desktop v-if="$store.getters.getIsOn()" />
   </div>
 </template>
 
@@ -25,6 +25,7 @@ body {
   padding: 0;
   margin: 0;
   overflow: hidden;
+  background-color: black;
 }
 div {
   display: flex;
