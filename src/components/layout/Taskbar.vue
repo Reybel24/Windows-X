@@ -59,12 +59,12 @@ export default {
 
     &:hover {
       background-color: rgb(59, 55, 50);
-      color: rgb(135, 131, 128);
+      color: rgb(66, 157, 231);
     }
 
     &:hover:active {
       background-color: rgb(47, 42, 38);
-      color: rgb(93, 90, 88);
+      color: rgb(0, 120, 215);
 
       .icon {
         transform: scale(0.92, 0.92);
