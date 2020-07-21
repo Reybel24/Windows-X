@@ -11,7 +11,7 @@
      * @constructor
      * @export
      */
-    function Runner(outerContainerId , opt_config, audio) {
+    function Runner(outerContainerId, opt_config, audio) {
         // Singleton
         if (Runner.instance_) {
             return Runner.instance_;
@@ -20,14 +20,12 @@
 
         this.outerContainerEl = document.querySelector(outerContainerId);
 
-        // console.log(document.querySelector('#audio-resources'));
-
         this.containerEl = null;
         this.snackbarEl = null;
         this.detailsButton = this.outerContainerEl.querySelector('#details-button');
 
         this.config = opt_config || Runner.config;
-        console.log(this.config)
+        // console.log(this.config)
 
         this.dimensions = Runner.defaultDimensions;
 
@@ -107,7 +105,7 @@
      * @enum {number}
      */
     Runner.config = {
-        ACCELERATION: 0.001,
+        ACCELERATION: 0.001, // 0.001
         BG_CLOUD_SPEED: 0.2,
         BOTTOM_PAD: 10,
         CLEAR_TIME: 3000,
@@ -122,7 +120,7 @@
         MAX_CLOUDS: 6,
         MAX_OBSTACLE_LENGTH: 3,
         MAX_OBSTACLE_DUPLICATION: 2,
-        MAX_SPEED: 13,
+        MAX_SPEED: 18, // 13
         MIN_JUMP_HEIGHT: 35,
         MOBILE_SPEED_COEFFICIENT: 1.2,
         RESOURCE_TEMPLATE_ID: 'audio-resources',
@@ -313,11 +311,10 @@
         loadSounds: function () {
             if (!IS_IOS) {
                 this.audioContext = new AudioContext();
-                
-                console.log(document.querySelector('#' + this.config.RESOURCE_TEMPLATE_ID))
+
                 var resourceTemplate =
                     document.querySelector('#' + this.config.RESOURCE_TEMPLATE_ID).content;
-                
+
 
                 for (var sound in Runner.sounds) {
                     var soundSrc =
@@ -473,7 +470,7 @@
                     'from { width:' + Trex.config.WIDTH + 'px }' +
                     'to { width: ' + this.dimensions.WIDTH + 'px }' +
                     '}';
-                
+
                 // create a style sheet to put the keyframe rule in 
                 // and then place the style sheet in the html head    
                 var sheet = document.createElement('style');
@@ -527,6 +524,7 @@
          * Update the game frame and schedules the next one.
          */
         update: function () {
+            // console.log('update')
             this.updatePending = false;
 
             var now = getTimeStamp();
@@ -805,6 +803,7 @@
         },
 
         stop: function () {
+            // console.log('stop')
             this.playing = false;
             this.paused = true;
             cancelAnimationFrame(this.raqId);
@@ -2713,13 +2712,18 @@
     };
 })();
 
-
+var runner = null;
 function instantiateRunner() {
-    console.log(document)
     const _template = document.querySelector("#audio-resources");
-    console.log(_template)
-    new Runner('.interstitial-wrapper');
+    runner = new Runner('.interstitial-wrapper');
 }
 export { instantiateRunner }
+
+function destroyGame() {
+    runner.playing = false;
+    runner.stop();
+    runner.stopListening();
+}
+export { destroyGame }
 
 // document.addEventListener('DOMContentLoaded', onDocumentLoad);

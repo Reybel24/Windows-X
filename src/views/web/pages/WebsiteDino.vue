@@ -36,6 +36,9 @@
       </div>
     </div>
   </body>
+  <div
+    class="note"
+  >*Due to a bug attemping to port this over, the game will not run if you've navigated away from it. Refresh the (actual) page to play again.</div>
 </div>
 </template>
 
@@ -47,7 +50,7 @@ import WebCore from '@/views/web/core/WebCore';
 import '@/appdata/Web/Dino/style.css';
 
 // Game js
-import { instantiateRunner } from '@/appdata/Web/Dino/game.js';
+import { instantiateRunner, destroyGame } from '@/appdata/Web/Dino/game.js';
 
 export default {
   name: 'Bing',
@@ -66,11 +69,21 @@ export default {
     // Begin
     document.onkeydown = function(evt) {
       evt = evt || window.event;
-      if (evt.keyCode == 32) {
+      if (
+        evt.keyCode == 32 ||
+        evt.keyCode == 37 ||
+        evt.keyCode == 38 ||
+        evt.keyCode == 39 ||
+        evt.keyCode == 40
+      ) {
         var box = document.getElementById('messageBox');
         box.style.visibility = 'hidden';
       }
     };
+  },
+  destroyed() {
+    document.onkeydown = null;
+    destroyGame();
   },
   computed: {}
 };
@@ -88,6 +101,11 @@ export default {
 
   img {
     height: 60%;
+  }
+
+  .note {
+    margin-bottom: 20px;
+    max-width: 500px;
   }
 }
 </style>

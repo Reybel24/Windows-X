@@ -10,6 +10,7 @@
       />
     </div>
     <div ref="apps"></div>
+    <StartMenu />
     <Taskbar />
   </div>
 </template>
@@ -19,7 +20,9 @@
 import Win32 from '@/components/core/Win32.vue';
 import WinAppHooks from '@/components/core/WinAppHooks.vue';
 
-import Taskbar from '@/views/Taskbar.vue';
+// Layout
+import Taskbar from '@/components/layout/Taskbar.vue';
+import StartMenu from '@/components/layout/StartMenu.vue';
 
 // Desktop icons
 import DesktopIcon from '@/components/layout/DesktopIcon.vue';
@@ -31,7 +34,8 @@ export default {
   mixins: [Win32, WinAppHooks],
   components: {
     Taskbar,
-    DesktopIcon
+    DesktopIcon,
+    StartMenu
   },
   data() {
     return {
