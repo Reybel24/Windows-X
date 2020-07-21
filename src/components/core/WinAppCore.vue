@@ -67,8 +67,8 @@ export default {
       return {
         width: this.winSize.width + 'px',
         height: this.winSize.height + 'px',
-        marginTop: this.winPos.y + 'px',
-        marginLeft: this.winPos.x + 'px',
+        marginTop: this.winPos.y + 'px !important',
+        marginLeft: this.winPos.x + 'px !important',
         opacity: this.isMinimized ? 0 : 1
       };
     }

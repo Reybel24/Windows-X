@@ -1,41 +1,41 @@
 <template>
-  <WinApp class="app-terminal" :class="calcTerminalBgColor">
-      <!-- Content (text) -->
-      <div
-        class="terminal-inner"
-        v-on:click="setFocusInput()"
-        ref="terminalTextArea"
-        :class="calcTerminalTextColor"
-      >
-        <perfect-scrollbar :options="this.scrollBarOptions" v-chat-scroll>
-          <div class="terminal-content">
-            <!-- Commands -->
-            <div
-              class="text-terminal command-line-item"
-              :class="getTextColor(item)"
-              v-for="item in terminal_dom"
-              :key="item.index"
-            >{{ lineToDOM(item) }}</div>
+  <WinApp class="app-terminal" :class="calcTerminalBgColor" :style="coreStyle" :title="'Powershell'">
+    <!-- Content (text) -->
+    <div
+      class="terminal-inner"
+      v-on:click="setFocusInput()"
+      ref="terminalTextArea"
+      :class="calcTerminalTextColor"
+    >
+      <perfect-scrollbar :options="this.scrollBarOptions" v-chat-scroll>
+        <div class="terminal-content">
+          <!-- Commands -->
+          <div
+            class="text-terminal command-line-item"
+            :class="getTextColor(item)"
+            v-for="item in terminal_dom"
+            :key="item.index"
+          >{{ lineToDOM(item) }}</div>
 
-            <!-- Interact -->
-            <div
-              class="text-terminal command-line-item interact"
-              v-on:keydown.enter="onEnter"
-              v-on:keydown.up="navigateHistory(0)"
-              v-on:keydown.down="navigateHistory(1)"
-            >
-              {{ this.command_pre }}
-              <input
-                type="text"
-                class="command-input text-terminal"
-                v-model="command_input"
-                ref="commandInput"
-                spellcheck="false"
-              />
-            </div>
+          <!-- Interact -->
+          <div
+            class="text-terminal command-line-item interact"
+            v-on:keydown.enter="onEnter"
+            v-on:keydown.up="navigateHistory(0)"
+            v-on:keydown.down="navigateHistory(1)"
+          >
+            {{ this.command_pre }}
+            <input
+              type="text"
+              class="command-input text-terminal"
+              v-model="command_input"
+              ref="commandInput"
+              spellcheck="false"
+            />
           </div>
-        </perfect-scrollbar>
-      </div>
+        </div>
+      </perfect-scrollbar>
+    </div>
   </WinApp>
 </template>
 
@@ -45,11 +45,11 @@ import WinApp from '@/components/core/WinApp';
 import WinAppCore from '@/components/core/WinAppCore';
 
 // UI
-import AppBorder from "@/components/layout/AppBorder.vue";
-// import PerfectScrollbar from 'perfect-scrollbar';
+import AppBorder from '@/components/layout/AppBorder.vue';
 
 export default {
-  name: "terminal",
+  name: 'Terminal',
+  mixins: [WinAppCore],
   components: {
     WinApp
   },
@@ -62,40 +62,29 @@ export default {
   },
   data() {
     return {
-      command_pre: "WEB:\\Users\\Reybel>",
+      command_pre: 'PS C:\\Users\\You>',
       command_history: [],
       canInteract: true,
-      command_input: "",
+      command_input: '',
       currentHistoryIndex: 0, // keep track where user is when browsing previous commands
       // These are the items that are displayed in the terminal
-      terminal_dom: [
-        { command: "echo", arguments: ['"$welcomeMsg"'] },
-        {
-          output: "Hey there! Thank you for visiting my portfolio!",
-          color: "orange"
-        },
-        {
-          output:
-            "Try typing that command you see down there (or just press it and press enter)",
-          color: "green"
-        }
-      ],
+      terminal_dom: [],
       specialVariables: [
-        { var: "$HOME", value: "/home/reybel" },
-        { var: "$PATH", value: "/usr/local/bin" },
-        { var: "$USER", value: "reybel" }
+        { var: '$HOME', value: '/home/reybel' },
+        { var: '$PATH', value: '/usr/local/bin' },
+        { var: '$USER', value: 'reybel' }
       ],
       isServed: false,
       commands: [
-        { cmd: "npm run start", description: "Serves the site" },
-        { cmd: "echo", description: "Display a message in the terminal" },
-        { cmd: "clear", description: "Clears the terminal" },
-        { cmd: "ls", description: "List items in the current directory" },
-        { cmd: "alert", description: "Displays an alert in the browser" },
-        { cmd: "cd", description: "Navigate to a location" }
+        { cmd: 'npm run start', description: 'Serves the site' },
+        { cmd: 'echo', description: 'Display a message in the terminal' },
+        { cmd: 'clear', description: 'Clears the terminal' },
+        { cmd: 'ls', description: 'List items in the current directory' },
+        { cmd: 'alert', description: 'Displays an alert in the browser' },
+        { cmd: 'cd', description: 'Navigate to a location' }
       ],
-      terminal_bg_color: "black",
-      terminal_text_color: "white",
+      terminal_bg_color: 'black',
+      terminal_text_color: 'white',
       scrollBarOptions: {
         wheelSpeed: 1,
         suppressScrollX: true
@@ -111,7 +100,7 @@ export default {
       let command_parsed = this.parseCommand(command);
 
       // Add to history and terminal DOM
-      if (command_parsed.command != "")
+      if (command_parsed.command != '')
         this.addCommandToHistory(command_parsed);
       this.addToTerminalDOM(command_parsed);
 
@@ -119,17 +108,17 @@ export default {
       this.executeCommand(command_parsed);
 
       // Clear input
-      this.command_input = "";
+      this.command_input = '';
     },
     // Take an object, which might be a command or output, and convert it to a display-able string
     lineToDOM(item) {
-      if (Object.prototype.hasOwnProperty.call(item, "command")) {
+      if (Object.prototype.hasOwnProperty.call(item, 'command')) {
         // Type is command
         return (
           this.command_pre +
-          " " +
+          ' ' +
           item.command +
-          " " +
+          ' ' +
           this.argumentsAsString(item.arguments)
         );
       } else {
@@ -146,7 +135,7 @@ export default {
       this.addToTerminalDOM(item);
     },
     parseCommand(commandString) {
-      let pieces = commandString.split(" ");
+      let pieces = commandString.split(' ');
       let cmd = pieces[0];
 
       // Grab rest of arguments
@@ -164,52 +153,51 @@ export default {
     // Takes a command object and executes it given its arguments
     executeCommand(cmd) {
       switch (cmd.command) {
-        case "npm":
-          if (cmd.arguments[0] == "run") {
-            if (cmd.arguments[1] == "serve") {
+        case 'npm':
+          if (cmd.arguments[0] == 'run') {
+            if (cmd.arguments[1] == 'serve') {
               if (!this.isServed) {
                 this.isServed = true;
-                this.$emit("serve");
-
+                console.log('hey')
                 // Some output to terminal
                 this.showOutput({
-                  output: "DONE Compiled successfully in 261ms",
-                  color: "green"
+                  output: 'DONE Compiled successfully in 261ms',
+                  color: 'green'
                 });
-                this.showOutput({ output: "App running at:", color: "white" });
+                this.showOutput({ output: 'App running at:', color: 'white' });
                 this.showOutput({
-                  output: "- Network: https://reybelc.com",
-                  color: "white"
+                  output: '- Network: https://windows-x.com',
+                  color: 'white'
                 });
               } else {
                 this.showOutput({
-                  output: "App already running!",
-                  color: "orange"
+                  output: 'App already running!',
+                  color: 'orange'
                 });
               }
             }
           }
           break;
 
-        case "clear":
+        case 'clear':
           this.clearHistory();
           break;
 
-        case "echo":
+        case 'echo':
           // Special vars
           if (cmd.arguments.length == 1) {
             let special = this.matchSpecialVar(cmd.arguments[0]);
             if (special != false) {
-              this.showOutput({ output: special, color: "orange" });
+              this.showOutput({ output: special, color: 'orange' });
               return;
             }
           }
 
           if (cmd.arguments.length > 0) {
             // Build string
-            let fullString = "";
+            let fullString = '';
             for (let word of cmd.arguments) {
-              fullString += word + " ";
+              fullString += word + ' ';
             }
 
             // Show output
@@ -217,13 +205,13 @@ export default {
           }
           break;
 
-        case "alert":
+        case 'alert':
           // alert
           if (cmd.arguments.length > 0) {
             // Build string
-            let fullString = "";
+            let fullString = '';
             for (let word of cmd.arguments) {
-              fullString += word + " ";
+              fullString += word + ' ';
             }
 
             // Show output
@@ -232,11 +220,11 @@ export default {
           }
           break;
 
-        case "git":
+        case 'git':
           if (cmd.arguments.length == 1) {
             // Single argument commands
-            if (cmd.arguments[0] == "status") {
-              this.showOutput({ output: "On branch dev" });
+            if (cmd.arguments[0] == 'status') {
+              this.showOutput({ output: 'On branch dev' });
               this.showOutput({
                 output: "Your branch is up to date with 'origin/dev'."
               });
@@ -246,62 +234,62 @@ export default {
             }
           }
           break;
-        case "ls":
+        case 'ls':
           if (cmd.arguments.length == 1) {
             // Single argument commands
-            if (cmd.arguments[0] == "projects") {
-              this.showOutput({ output: "Listing projects..." });
+            if (cmd.arguments[0] == 'projects') {
+              this.showOutput({ output: 'Listing projects...' });
             }
           }
           break;
-        case "help":
+        case 'help':
           for (let command of this.commands) {
             this.showOutput({
-              output: command.cmd + " ::: " + command.description
+              output: command.cmd + ' ::: ' + command.description
             });
           }
           break;
-        case "cd":
+        case 'cd':
           if (cmd.arguments.length == 1) {
             // Single argument commands
-            if (cmd.arguments[0] == "resume") {
+            if (cmd.arguments[0] == 'resume') {
               // Open resume
-              this.showOutput({ output: "Thank you for your interest!" });
-              this.navigateTo("resume");
-            } else if (cmd.arguments[0] == "projects") {
+              this.showOutput({ output: 'Thank you for your interest!' });
+              this.navigateTo('resume');
+            } else if (cmd.arguments[0] == 'projects') {
               // Check if site has been served yet
               if (!this.isServed) {
                 this.showOutput({ output: "Run 'npm run serve' first!" });
                 return;
               }
-              this.showOutput({ output: "Navigating to projects..." });
-              this.$emit("scroll", "projects");
+              this.showOutput({ output: 'Navigating to projects...' });
+              this.$emit('scroll', 'projects');
             }
           }
           break;
-        case "color":
+        case 'color':
           if (this.argExists(cmd.arguments, 1)) {
             // bg color
             let color1 = cmd.arguments[0];
             this.showOutput({
-              output: "Changing background color to " + color1
+              output: 'Changing background color to ' + color1
             });
             this.terminal_bg_color = color1;
           } else {
-            this.showOutput({ output: "Please specify a color!" });
+            this.showOutput({ output: 'Please specify a color!' });
           }
 
           // Check for a second color (text color)
           if (this.argExists(cmd.arguments, 2)) {
             // text color
             let color2 = cmd.arguments[1];
-            this.showOutput({ output: "Changing text color to " + color2 });
+            this.showOutput({ output: 'Changing text color to ' + color2 });
             this.terminal_text_color = color2;
           }
 
           break;
 
-        case "":
+        case '':
           break;
 
         default:
@@ -324,11 +312,11 @@ export default {
         let invalidCommandString = this.commandToString(cmd);
         this.showOutput({
           output: "unrecognized command '" + invalidCommandString + "'",
-          color: "red"
+          color: 'red'
         });
       } else {
         // Custom message
-        this.showOutput({ ouput: errorMsg, color: "red" });
+        this.showOutput({ ouput: errorMsg, color: 'red' });
       }
     },
     // Takes Object { command: "add", arguments: "projects" }
@@ -338,9 +326,9 @@ export default {
     },
     // Return list of arguments as a string
     argumentsAsString(args) {
-      let argString = "";
+      let argString = '';
       for (let arg of args) {
-        argString = argString + " " + arg;
+        argString = argString + ' ' + arg;
       }
       return argString;
     },
@@ -376,7 +364,7 @@ export default {
         ) {
           // Check if we are at the last index (most recent command)
           this.currentHistoryIndex++;
-          this.command_input = "";
+          this.command_input = '';
         } else {
           // console.log("You've reached the end of the history!");
         }
@@ -389,7 +377,7 @@ export default {
       // Arguments?
       if (command.arguments.length > 0) {
         for (let arg of command.arguments) {
-          commandAsString = commandAsString + " " + arg;
+          commandAsString = commandAsString + ' ' + arg;
         }
       }
       return commandAsString;
@@ -401,8 +389,8 @@ export default {
       this.terminal_dom = [];
     },
     getTextColor(item) {
-      if (Object.prototype.hasOwnProperty.call(item, "color")) {
-        return "text-" + item.color;
+      if (Object.prototype.hasOwnProperty.call(item, 'color')) {
+        return 'text-' + item.color;
       }
     },
     // Match special variables/keywords
@@ -415,14 +403,15 @@ export default {
       return false;
     },
     navigateTo(location) {
-      this.$emit("navigate", location);
+      this.$emit('navigate', location);
     }
   },
   mounted() {
+    // Set initial window position
+    this.setInitialPos(800, 200);
+
     this.setFocusInput();
     this.updateHistoryIndex();
-
-    const ps = new PerfectScrollbar('#container');
   },
   watch: {
     command_history: function() {
@@ -436,31 +425,36 @@ export default {
   },
   computed: {
     calcTerminalBgColor: function() {
-      return "bg-" + this.terminal_bg_color;
+      return 'bg-' + this.terminal_bg_color;
     },
     calcTerminalTextColor: function() {
-      return "text-" + this.terminal_text_color;
+      return 'text-' + this.terminal_text_color;
     }
   }
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&family=Lato&display=swap');
+
 .app-terminal {
   background-color: #1c1c2b;
   padding-bottom: 12px;
   cursor: default;
   color: white;
+  width: 700px !important;
+  height: 400px !important;
+  font-family: 'Inconsolata', monospace;
 }
 
 /* Terminal text */
 .terminal-inner {
-  padding: 13px 8px 13px 13px;
+  padding: 13px 8px 2px 7px;
   display: flex;
   flex-direction: column;
-  height: 100%;
   overflow-x: hidden;
   overflow-y: hidden;
+  flex-grow: 1;
 }
 
 .terminal-content {
@@ -497,5 +491,15 @@ export default {
   cursor: default;
   flex-grow: 1;
   margin-left: 8px;
+  font-size: 1em;
+  font-family: 'Inconsolata', monospace;
+}
+</style>
+
+<style lang="scss">
+.ps {
+  .ps__rail-y {
+    margin-left: auto;
+  }
 }
 </style>
