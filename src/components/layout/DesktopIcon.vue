@@ -71,7 +71,7 @@ export default {
 
       if (this.clicks >= 2) {
         this.clicks = 0;
-        EventBus.$emit('OPEN_APP', this.app);
+        EventBus.$emit('LAUNCH_APP', this.app);
       } else {
         // do nothing
       }

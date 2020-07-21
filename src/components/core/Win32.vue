@@ -47,7 +47,7 @@ export default {
       // Open app depending on type
       var app = this.getAppForFileExt(file.ext);
       if (app != null) {
-        EventBus.$emit('OPEN_APP', app, { file: file });
+        EventBus.$emit('LAUNCH_APP', app, { file: file });
       } else {
         console.log('unsupported file type: ' + file.ext);
       }
@@ -68,7 +68,7 @@ export default {
   computed: {},
   mounted() {
     // Subscribe to relevant events
-    EventBus.$on('OPEN_APP', (app, payload = null) => {
+    EventBus.$on('LAUNCH_APP', (app, payload = null) => {
       this.launchApp(app, payload);
     });
 
@@ -78,7 +78,7 @@ export default {
   },
   destroyed() {
     // Stop listening.
-    EventBus.$off('OPEN_APP');
+    EventBus.$off('LAUNCH_APP');
     EventBus.$off('OPEN_FILE');
   }
 };
