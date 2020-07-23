@@ -16,6 +16,7 @@ export default new Vuex.Store({
       { appId: 'a5', pos: { x: 90, y: 120 } },
       { appId: 'g1', pos: { x: 170, y: 120 } },
       { appId: 'a7', pos: { x: 250, y: 120 } },
+      { appId: 'b10', pos: { x: 330, y: 15 } }
     ],
     // These apps are pinned to the taskbar
     taskbarShortcuts: [
@@ -30,7 +31,7 @@ export default new Vuex.Store({
     ],
     processes: [],
     on: true,
-    locked: true,
+    locked: false,
   },
   getters: {
     getAppsInTaskbar: state => {
