@@ -1,0 +1,140 @@
+{
+    "watching": [
+          {
+            "title": "The Incredibles",
+            "logo": "the-incredibles_logo.png",
+            "background": "the-incredibles_background.jpg"
+          },
+          {
+            "title": "Fantastic Mr.Fox",
+            "logo": "fantastic-mr-fox_logo.png",
+            "background": "fantastic-mr-fox_background.jpg"
+          },
+          {
+            "title": "Ex Machina",
+            "logo": "ex-machine_logo.png",
+            "background": "ex-machine_background.jpg"
+          },
+          {
+            "title": "Avengers",
+            "logo": "avengers_logo.png",
+            "background": "avengers_background.jpg"
+          },
+          {
+            "title": "Interstellar",
+            "logo": "interstellar_logo.png",
+            "background": "interstellar_background.jpg"
+          },
+          {
+            "title": "Ex Machina",
+            "logo": "ex-machine_logo.png",
+            "background": "ex-machine_background.jpg"
+          },
+          {
+            "title": "Avengers",
+            "logo": "avengers_logo.png",
+            "background": "avengers_background.jpg"
+          }
+    ],
+    "movies": [
+        {
+            "title": "Interstellar",
+            "logo": "interstellar_logo.png",
+            "background": "interstellar_background.jpg"
+          },
+          {
+            "title": "Avengers",
+            "logo": "avengers_logo.png",
+            "background": "avengers_background.jpg"
+          },
+          {
+            "title": "The Incredibles",
+            "logo": "the-incredibles_logo.png",
+            "background": "the-incredibles_background.jpg"
+          },
+          {
+            "title": "Ex Machina",
+            "logo": "ex-machine_logo.png",
+            "background": "ex-machine_background.jpg"
+          },
+          {
+            "title": "Fantastic Mr.Fox",
+            "logo": "fantastic-mr-fox_logo.png",
+            "background": "fantastic-mr-fox_background.jpg"
+          },
+          {
+            "title": "Interstellar",
+            "logo": "interstellar_logo.png",
+            "background": "interstellar_background.jpg"
+          },
+          {
+            "title": "Interstellar",
+            "logo": "interstellar_logo.png",
+            "background": "interstellar_background.jpg"
+          },
+          {
+            "title": "Ex Machina",
+            "logo": "ex-machine_logo.png",
+            "background": "ex-machine_background.jpg"
+          },
+          {
+            "title": "Avengers",
+            "logo": "avengers_logo.png",
+            "background": "avengers_background.jpg"
+          }
+    ],
+    "shows": [
+        {
+            "title": "Stranger Things",
+            "logo": "interstellar_logo.png",
+            "background": "interstellar_background.jpg"
+          }
+    ],
+    "originals": [
+        {
+            "title": "Interstellar",
+            "logo": "interstellar_logo.png",
+            "background": "interstellar_background.jpg"
+          },
+          {
+            "title": "Avengers",
+            "logo": "avengers_logo.png",
+            "background": "avengers_background.jpg"
+          },
+          {
+            "title": "The Incredibles",
+            "logo": "the-incredibles_logo.png",
+            "background": "the-incredibles_background.jpg"
+          },
+          {
+            "title": "Ex Machina",
+            "logo": "ex-machine_logo.png",
+            "background": "ex-machine_background.jpg"
+          },
+          {
+            "title": "Fantastic Mr.Fox",
+            "logo": "fantastic-mr-fox_logo.png",
+            "background": "fantastic-mr-fox_background.jpg"
+          },
+          {
+            "title": "Interstellar",
+            "logo": "interstellar_logo.png",
+            "background": "interstellar_background.jpg"
+          },
+          {
+            "title": "Interstellar",
+            "logo": "interstellar_logo.png",
+            "background": "interstellar_background.jpg"
+          },
+          {
+            "title": "Ex Machina",
+            "logo": "ex-machine_logo.png",
+            "background": "ex-machine_background.jpg"
+          },
+          {
+            "title": "Avengers",
+            "logo": "avengers_logo.png",
+            "background": "avengers_background.jpg"
+          }
+    ]
+}

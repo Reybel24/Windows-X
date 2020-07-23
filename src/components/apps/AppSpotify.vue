@@ -337,7 +337,7 @@ export default {
 
   .player {
     width: 100%;
-    height: 200px;
+    height: 70px;
     background-color: #282828;
 
     .media {
