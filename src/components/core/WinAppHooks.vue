@@ -8,6 +8,7 @@ import Notepad from '@/components/apps/AppNotepad.vue';
 import PhotoViewer from '@/components/apps/AppPhotoViewer.vue';
 import Firefox from '@/components/apps/AppFirefox.vue';
 import TaskManager from '@/components/apps/AppTaskManager.vue';
+import Netflix from '@/components/apps/AppNetflix.vue';
 
 // Need access to store
 import store from '@/store';
@@ -21,7 +22,8 @@ export default {
     Notepad,
     PhotoViewer,
     Firefox,
-    TaskManager
+    TaskManager,
+    Netflix
   },
   methods: {
     getAppForFileExt(ext) {
@@ -161,6 +163,16 @@ export default {
         name: 'Task Manager',
         component: 'TaskManager',
         icon: 'icon_taskManager',
+        installed: 1,
+        pinned: 1,
+        isOpen: false,
+        stackable: true
+      },
+      {
+        appId: 'b10',
+        name: 'Netflix',
+        component: 'Netflix',
+        icon: 'icon_netflix',
         installed: 1,
         pinned: 1,
         isOpen: false,
