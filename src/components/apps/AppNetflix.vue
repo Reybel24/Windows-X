@@ -2,6 +2,7 @@
   <WinApp
     :title="'Notflix'"
     :style="coreStyle"
+    :theme="'dark'"
     @click-maximize="maximizeApp"
     @click-minimize="minimizeApp"
   >
@@ -236,7 +237,6 @@ export default {
     flex-direction: column;
 
     .row {
-      height: 160px;
       flex-direction: column;
       margin-bottom: 30px;
     }
@@ -248,7 +248,7 @@ export default {
     }
 
     .items-group {
-      height: 165px;
+      height: 155px;
       // width: 200px;
       flex-direction: row;
       margin-top: 9px;
@@ -266,7 +266,7 @@ export default {
 
       .item {
         width: 230px;
-        height: 85%;
+        height: 83%;
         border-radius: 5px;
         margin: 0 5px 0 5px;
         transition: 2s;
@@ -308,7 +308,7 @@ export default {
 
           .logo {
             width: 50%;
-            height: 41%;
+            height: 36%;
             margin-top: 4%;
             margin-bottom: 5%;
             padding-left: 5%;

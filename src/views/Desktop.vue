@@ -20,6 +20,9 @@
 import Win32 from '@/components/core/Win32.vue';
 import WinAppHooks from '@/components/core/WinAppHooks.vue';
 
+// Events
+import { EventBus } from '@/util/event-bus.js';
+
 // Layout
 import Taskbar from '@/components/layout/Taskbar.vue';
 // import TaskbarTop from '@/components/layout/TaskbarTop.vue';
@@ -50,7 +53,15 @@ export default {
       return `url(${require('@/assets/wallpapers/windows-10.jpg')})`;
     }
   },
-  mounted() {}
+  mounted() {
+    // Launch on startup
+    var app = store.getters.getAppByName('Sticky Note');
+    EventBus.$emit('LAUNCH_APP', app, {
+      title: 'Greetings',
+      content:
+        'Welcome and thanks for visiting! Everything you see here, including all of the apps, was painstakingly and meticulously re-created from scratch by me (except for the dinosaur game). The apps are just meant to be toy versions of their real-life counterparts and have very limited, if any, functionality. Feel free to look around and I hope this is as amusing to you as it was for me while creating it! - Reybel C.'
+    });
+  }
 };
 </script>
 
