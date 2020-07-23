@@ -2,6 +2,7 @@
   <WinApp
     :title="'Notflix'"
     :style="coreStyle"
+    :theme="'dark'"
     @click-maximize="maximizeApp"
     @click-minimize="minimizeApp"
   >
