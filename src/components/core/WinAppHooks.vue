@@ -9,6 +9,7 @@ import PhotoViewer from '@/components/apps/AppPhotoViewer.vue';
 import Firefox from '@/components/apps/AppFirefox.vue';
 import TaskManager from '@/components/apps/AppTaskManager.vue';
 import Netflix from '@/components/apps/AppNetflix.vue';
+import StickyNote from '@/components/apps/AppStickyNote.vue';
 
 // Need access to store
 import store from '@/store';
@@ -23,7 +24,8 @@ export default {
     PhotoViewer,
     Firefox,
     TaskManager,
-    Netflix
+    Netflix,
+    StickyNote
   },
   methods: {
     getAppForFileExt(ext) {
@@ -173,6 +175,16 @@ export default {
         name: 'Netflix',
         component: 'Netflix',
         icon: 'icon_netflix',
+        installed: 1,
+        pinned: 1,
+        isOpen: false,
+        stackable: true
+      },
+      {
+        appId: 'a11',
+        name: 'Sticky Note',
+        component: 'StickyNote',
+        icon: 'icon_sticky-note',
         installed: 1,
         pinned: 1,
         isOpen: false,
