@@ -31,7 +31,7 @@ export default new Vuex.Store({
     ],
     processes: [],
     on: true,
-    locked: false,
+    locked: true,
   },
   getters: {
     getAppsInTaskbar: state => {
