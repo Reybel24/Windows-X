@@ -7,8 +7,8 @@
   >
     <div class="lockImg" :style="lockImgStyle">
       <div class="dateTime" v-if="!showingSignIn">
-        <div class="clock">12:23</div>
-        <div class="date">Saturday, July 18</div>
+        <div class="clock">{{ time }}</div>
+        <div class="date">{{ date }}</div>
       </div>
     </div>
     <div class="dimmer" :style="{ opacity: (showingSignIn) ? .65 : 0 }"></div>
@@ -34,6 +34,9 @@
 import { EventBus } from '@/util/event-bus.js';
 import store from '@/store';
 
+// Time data
+var moment = require('moment');
+
 export default {
   name: 'Lockscreen',
   components: {},
@@ -42,7 +45,9 @@ export default {
       showingSignIn: false,
       password: 'spider',
       input: '',
-      passwordMatched: false
+      passwordMatched: false,
+      time: '',
+      date: ''
     };
   },
   methods: {
@@ -71,6 +76,12 @@ export default {
     fillPassword() {
       this.input = this.password;
       this.checkPassword(this.input);
+    },
+    setTime() {
+      this.time = moment().format('h:mm');
+    },
+    setDate() {
+      this.date = moment().format('dddd, MMMM D');
     }
   },
   computed: {
@@ -95,6 +106,18 @@ export default {
     }
   },
   mounted() {
+    // Set time
+    this.setTime();
+    this.setDate();
+
+    // Time update
+    setInterval(() => {
+      this.setTime();
+    }, 1000);
+    setInterval(() => {
+      this.setDate();
+    }, 1000);
+
     // Subscriptions
     EventBus.$on('LOCK_PC', () => {
       store.dispatch({ type: 'lockPC' });
@@ -151,6 +174,7 @@ export default {
       flex-direction: column;
       padding: 0 0 60px 60px;
       user-select: none;
+      font-size: 1.4em;
 
       .clock {
         font-size: 4em;
