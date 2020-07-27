@@ -4,6 +4,7 @@
     @click-maximize="maximizeApp"
     @click-minimize="minimizeApp"
     :title="fullImgName"
+    :icon="app.icon"
   >
     <div class="wrapper">
       <div class="action-bar">

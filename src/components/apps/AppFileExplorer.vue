@@ -4,6 +4,7 @@
     @click-maximize="maximizeApp"
     @click-minimize="minimizeApp"
     :title="'Explorer'"
+    :icon="app.icon"
     :theme="'dark'"
   >
     <div class="nav-sidebar">

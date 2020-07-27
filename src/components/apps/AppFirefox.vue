@@ -4,6 +4,7 @@
     @click-maximize="maximizeApp"
     @click-minimize="minimizeApp"
     :title="'Firefox'"
+    :icon="app.icon"
     :theme="'dark'"
   >
     <div class="main">

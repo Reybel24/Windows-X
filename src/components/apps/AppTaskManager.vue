@@ -1,6 +1,7 @@
 <template>
   <WinApp
     :title="'Task Manager'"
+    :icon="app.icon"
     :style="coreStyle"
     @click-maximize="maximizeApp"
     @click-minimize="minimizeApp"
@@ -99,6 +100,7 @@ export default {
     width: 100%;
     background-color: white;
     border-bottom: 1px solid rgb(226, 226, 226);
+    user-select: none;
 
     .item {
       font-size: 0.79em;
