@@ -1,6 +1,7 @@
 <template>
   <WinApp
     :title="(this.title != null) ? this.title : 'Untitled'"
+    :icon="app.icon"
     :style="coreStyle"
     @click-maximize="maximizeApp"
     @click-minimize="minimizeApp"

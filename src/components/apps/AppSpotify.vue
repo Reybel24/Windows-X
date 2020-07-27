@@ -5,6 +5,7 @@
     @click-maximize="maximizeApp"
     @click-minimize="minimizeApp"
     :title="'Spotify'"
+    :icon="app.icon"
     :theme="'dark'"
   >
     <div class="wrapper">
@@ -129,13 +130,12 @@ export default {
         loop: true,
         volume: 2,
         onend: function() {
-          console.log('Finished!');
+          // console.log('Finished!');
         }
       });
       this.isPlaying = true;
     },
     pressPlayPause() {
-      console.log("play pausing")
       if (this.sound == null) return;
       if (this.sound.playing()) {
         // Pause it
@@ -152,7 +152,6 @@ export default {
       if (this.sound != null) this.sound.unload();
     },
     playRandomSong() {
-      console.log("playing random")
       const _randSong = this.songs[0];
       this.playSong(_randSong)
     }

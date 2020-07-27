@@ -4,6 +4,7 @@
     :class="calcTerminalBgColor"
     :style="coreStyle"
     :title="'Powershell'"
+    :icon="app.icon"
   >
     <!-- Content (text) -->
     <div

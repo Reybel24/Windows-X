@@ -1,6 +1,7 @@
 <template>
   <WinApp
     :title="'Untitled - Notepad'"
+    :icon="app.icon"
     :style="coreStyle"
     @click-maximize="maximizeApp"
     @click-minimize="minimizeApp"

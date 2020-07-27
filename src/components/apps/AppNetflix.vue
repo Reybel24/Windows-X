@@ -1,6 +1,7 @@
 <template>
   <WinApp
     :title="'Notflix'"
+    :icon="app.icon"
     :style="coreStyle"
     :theme="'dark'"
     @click-maximize="maximizeApp"

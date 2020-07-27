@@ -13,6 +13,7 @@
       @click-maximize="$emit('click-maximize')"
       @click-minimize="$emit('click-minimize')"
       :title="(this.title != null) ? this.title : ''"
+      :icon="(this.icon != null) ? this.icon : null"
       :theme="this.theme"
     />
 
@@ -41,6 +42,11 @@ export default {
     AppBorder
   },
   props: {
+    icon: {
+      type: String,
+      default: null,
+      required: false
+    },
     title: {
       type: String,
       default: null,
@@ -95,7 +101,8 @@ export default {
       return this.$parent;
     }
   },
-  mounted() {}
+  mounted() {
+  }
 };
 </script>
 

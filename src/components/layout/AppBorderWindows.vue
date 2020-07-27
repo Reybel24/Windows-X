@@ -1,5 +1,8 @@
 <template>
   <div class="border" @mousedown="dragWindow" :class="themeStyle">
+    <div class="app-icon" v-if="this.icon != null">
+      <img :src="getAppIcon" />
+    </div>
     <div
       class="title"
       v-if="this.title != null"
@@ -23,6 +26,11 @@
 export default {
   name: 'AppBorder',
   props: {
+    icon: {
+      type: String,
+      default: null,
+      required: false
+    },
     title: {
       type: String,
       default: 'Unnamed',
@@ -51,6 +59,9 @@ export default {
       } else {
         return 'theme-light';
       }
+    },
+    getAppIcon() {
+      return require('@/assets/icons/' + this.icon + '.png');
     }
   }
 };
@@ -66,6 +77,7 @@ export default {
   align-items: center;
   cursor: default;
   justify-content: space-evenly;
+  user-select: none;
 
   .actions-group {
     width: 126px;
@@ -120,9 +132,18 @@ export default {
     }
   }
 
+  .app-icon {
+    margin-left: 10px;
+    margin-right: 8px;
+
+    img {
+      // width: 100%;
+      height: 16px;
+    }
+  }
   .title {
     font-size: 0.9em;
-    padding: 0 0 0 8px;
+    padding: 0 0 0 0;
     margin-top: -2px;
     color: $dark-grey;
 
